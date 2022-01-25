@@ -12,16 +12,33 @@
 class Solution {
 public:
     int countNodes(TreeNode* root) {
-        return postOrder(root);
+        return countTree(root);
     }
     
-    int postOrder(TreeNode* root){
+    //countleftheight
+    int leftHeight(TreeNode* root){
         if(root==NULL)
             return 0;
+        return leftHeight(root->left) + 1;
+    }
+    
+    //countrightheight
+    int rightHeight(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        return rightHeight(root->right) + 1;
+    }
+    
+    //count nodes
+    int countTree(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        int lh = leftHeight(root);
+        int rh = rightHeight(root);
         
-        int left = postOrder(root->left);
-        int right = postOrder(root->right);
+        if(lh==rh)
+            return pow(2,lh)-1;
         
-        return 1 + left+right;
+        return countTree(root->left) + countTree(root->right) + 1;
     }
 };
