@@ -13,18 +13,18 @@ class Solution {
 public:
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
         vector<int> list;
-        preOrder(root1,list);
-        preOrder(root2,list);
+        inOrder(root1,list);
+        inOrder(root2,list);
         
         sort(list.begin(),list.end());
         return list;
     }
     
-    void preOrder(TreeNode* root , vector<int> &list){
+    void inOrder(TreeNode* root , vector<int> &list){
         if(root==NULL)
             return;
+        inOrder(root->left,list);
         list.push_back(root->val);
-        preOrder(root->left,list);
-        preOrder(root->right,list);
+        inOrder(root->right,list);
     }
 };
