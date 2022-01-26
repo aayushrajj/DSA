@@ -8,15 +8,12 @@ public:
         sort(boxTypes.begin(),boxTypes.end(),mysort);
         int totalunits = 0;
         for(int i=n-1;i>=0;i--){
-            if(boxTypes[i][0]<=truckSize){
-                totalunits += boxTypes[i][0]*boxTypes[i][1];
-                truckSize -= boxTypes[i][0];
+            if(truckSize>0){
+                int boxloaded = min(truckSize,boxTypes[i][0]);
+                totalunits += boxloaded*boxTypes[i][1];
+                truckSize -= boxloaded;
             }
-            else{
-                totalunits += truckSize*boxTypes[i][1];
-                truckSize -= boxTypes[i][0];
-            }
-            if(truckSize<=0)
+            else
                 break;
         }
         
