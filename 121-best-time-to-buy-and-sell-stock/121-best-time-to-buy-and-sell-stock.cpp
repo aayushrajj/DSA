@@ -8,7 +8,7 @@ public:
         while(end<n){
             if(prices[end]>prices[start])
                 maxprofit = max(maxprofit,prices[end]-prices[start]);
-            if(prices[end]<=prices[start])
+            else
                 start = end;
             end++;
         }
