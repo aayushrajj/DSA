@@ -2,15 +2,16 @@ class Solution {
 public:
     int findMaxLength(vector<int>& nums) {
         int n = nums.size();
-        vector<int> arr(2*n+1,INT_MIN);
-        arr[n] = -1;
-        int maxlen =0 , sum =0;
+        unordered_map<int,int> map;
+        int maxlen = 0 , sum = 0;
         for(int i=0;i<n;i++){
-            sum += (nums[i]==0 ? -1 : 1);
-            if(arr[sum + n]>=-1)
-                maxlen = max(maxlen , i-arr[sum+n]);
+            sum += (nums[i]==1 ? 1 : -1);
+            if(sum==0)
+                maxlen = max(maxlen , i+1);
+            else if(map.find(sum)!=map.end())
+                maxlen = max(maxlen , i-map[sum]);
             else
-                arr[sum+n] = i;      
+                map[sum] = i;
         }
         return maxlen;
     }
