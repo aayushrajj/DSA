@@ -9,24 +9,31 @@ using namespace std;
 
 class Solution{
 public:
-    int dp[1001][1001];
-    int matrixMultiplication(int N, int arr[])
-    {
-        memset(dp,-1,sizeof(dp));
-        return helper(arr,1,N-1);
-    }
-    
-    int helper(int arr[],int i,int j){
-        if(i>=j) return 0;
-        if(dp[i][j]!=-1) return dp[i][j];
-        int minans = INT_MAX;
-        for(int k=i;k<j;k++){
-            int tempans = helper(arr,i,k)+helper(arr,k+1,j)+
-            arr[i-1]*arr[k]*arr[j];
-            
-            minans = min(minans,tempans);
+    int matrixMultiplication(int N, int arr[]){
+        int dp[N][N];
+        for(int g=0;g<N-1;g++){
+            for(int i=0,j=g;j<N-1;i++,j++){
+                if(g==0){
+                    dp[i][j] = 0;
+                }
+                else if(g==1){
+                    dp[i][j] = arr[i]*arr[j+1]*arr[j];
+                }
+                else{
+                    int mincost = INT_MAX;
+                    for(int k=i;k<=j-1;k++){
+                        int leftcost = dp[i][k];
+                        int rightcost = dp[k+1][j];
+                        int m = arr[i]*arr[j+1]*arr[k+1];
+                        int totalcost = leftcost+rightcost+m;
+                        
+                        mincost = min(mincost,totalcost);
+                    }
+                    dp[i][j] = mincost;
+                }
+            }
         }
-        return dp[i][j] = minans;
+        return dp[0][N-2];
     }
 };
 
