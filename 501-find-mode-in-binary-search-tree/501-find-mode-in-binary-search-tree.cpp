@@ -15,24 +15,8 @@ public:
     vector<int> findMode(TreeNode* root) {
         int count=0,maxfreq=0;
         TreeNode* prev = NULL;
-        inOrderCount(root,prev,count,maxfreq);
-        prev = NULL;
-        count = 0;
         inOrderFill(root,prev,count,maxfreq);
         return res;
-    }
-    
-    void inOrderCount(TreeNode* root,TreeNode* &prev,int &count,int &maxfreq){
-        if(root==NULL)
-            return;
-        inOrderCount(root->left,prev,count,maxfreq);
-        if(prev && prev->val==root->val)
-            count++;
-        else
-            count=1;
-        maxfreq = max(maxfreq,count);
-        prev = root;
-        inOrderCount(root->right,prev,count,maxfreq);
     }
     
     void inOrderFill(TreeNode* root,TreeNode* &prev,int &count,int &maxfreq){
@@ -45,6 +29,11 @@ public:
             count = 1;
         if(count==maxfreq)
             res.push_back(root->val);
+        if(count>maxfreq){
+            res.clear();
+            res.push_back(root->val);
+            maxfreq = count;
+        }
         prev = root;
         inOrderFill(root->right,prev,count,maxfreq);
     }
