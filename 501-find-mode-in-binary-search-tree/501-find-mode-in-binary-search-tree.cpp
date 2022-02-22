@@ -11,26 +11,41 @@
  */
 class Solution {
 public:
-    unordered_map<int,int> map;
+    vector<int> res;
     vector<int> findMode(TreeNode* root) {
-        inOrder(root);
-        int mode = INT_MIN;
-        for(auto v : map){
-            mode = max(mode,v.second);
-        }
-        vector<int> res;
-        for(auto v : map){
-            if(v.second==mode)
-                res.push_back(v.first);
-        }
+        int count=0,maxfreq=0;
+        TreeNode* prev = NULL;
+        inOrderCount(root,prev,count,maxfreq);
+        prev = NULL;
+        count = 0;
+        inOrderFill(root,prev,count,maxfreq);
         return res;
     }
     
-    void inOrder(TreeNode* root){
+    void inOrderCount(TreeNode* root,TreeNode* &prev,int &count,int &maxfreq){
         if(root==NULL)
             return;
-        inOrder(root->left);
-        map[root->val]++;
-        inOrder(root->right);
+        inOrderCount(root->left,prev,count,maxfreq);
+        if(prev && prev->val==root->val)
+            count++;
+        else
+            count=1;
+        maxfreq = max(maxfreq,count);
+        prev = root;
+        inOrderCount(root->right,prev,count,maxfreq);
+    }
+    
+    void inOrderFill(TreeNode* root,TreeNode* &prev,int &count,int &maxfreq){
+        if(root==NULL)
+            return;
+        inOrderFill(root->left,prev,count,maxfreq);
+        if(prev && prev->val==root->val)
+            count++;
+        else
+            count = 1;
+        if(count==maxfreq)
+            res.push_back(root->val);
+        prev = root;
+        inOrderFill(root->right,prev,count,maxfreq);
     }
 };
