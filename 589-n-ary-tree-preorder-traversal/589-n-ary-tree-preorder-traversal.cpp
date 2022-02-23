@@ -22,16 +22,17 @@ class Solution {
 public:
     vector<int> preorder(Node* root) {
         vector<int> ans;
-        helper(root,ans);
-        return ans;
-    }
-    
-    void helper(Node* root,vector<int> &ans){
-        if(root==NULL)
-            return;
-        ans.push_back(root->val);
-        for(auto child : root->children){
-            helper(child,ans);
+        if(root==NULL) return ans;
+        stack<Node*> st;
+        st.push(root);
+        while(!st.empty()){
+            root = st.top();
+            st.pop();
+            ans.push_back(root->val);
+            for(int i=(root->children).size()-1;i>=0;i--){
+                st.push(root->children[i]);
+            }
         }
+        return ans;
     }
 };
