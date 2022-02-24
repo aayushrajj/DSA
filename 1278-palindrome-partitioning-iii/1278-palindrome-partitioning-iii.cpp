@@ -1,45 +1,29 @@
 class Solution {
 public:
-    int pal[101][101];
-    int dp[101][101];
-    int palindromePartition(string s, int k) {
-        int n = s.length();
-        memset(pal,0,sizeof(pal));
-        memset(dp,-1,sizeof(dp));
-        
-        for(int g=0;g<n;g++){
-            for(int i=0,j=g;j<n;i++,j++){
-                if(g==0)
-                    pal[i][j]=0;
-                else if(g==1){
-                    if(s[i]==s[j])
-                        pal[i][j]=0;
-                    else
-                        pal[i][j]=1;
-                }
-                else{
-                    if(s[i]==s[j])
-                        pal[i][j] = pal[i+1][j-1];
-                    else
-                        pal[i][j] = 1 + pal[i+1][j-1];
-                }
-            }
+    long int count(string s,int l,int r){
+        long int c=0;
+        while(l<r){
+            if(s[l]!=s[r]) c++;
+            l++;
+            r--;
         }
-        
-        return findMinCost(0,k,n);
+        return c;
     }
     
-    int findMinCost(int index,int k,int n){
-        if(index==n)
-            return n;
-        if(k==1)
-            return pal[index][n-1];
-        if(dp[index][k]!=-1)
-            return dp[index][k];
-        int ans = INT_MAX;
-        for(int i=index;i<n;i++){
-            ans = min(ans , pal[index][i] + findMinCost(i+1,k-1,n));
+    int dp[101][101];
+    int solve(string s,int k,int i){
+        if(i==s.length() and k==0) return 0;
+        if(k<0||i>=s.length()) return INT_MAX;
+        long int ans=INT_MAX;
+        if(dp[i][k]!=-1) return dp[i][k];
+        for(int j=i;j<s.length();j++){
+            ans=min(ans,count(s,i,j)+solve(s,k-1,j+1));
         }
-        return dp[index][k] = ans;
+        return dp[i][k]=ans;
+    }
+    
+    int palindromePartition(string s, int k) {
+        memset(dp,-1,sizeof(dp));
+        return solve(s,k,0);
     }
 };
