@@ -1,8 +1,9 @@
 class Solution {
 public:
-    int pal[2001][2001];
+    
     bool checkPartitioning(string s) {
         int n = s.length();
+        int pal[n][n];
         memset(pal,0,sizeof(pal));
         for(int g=0;g<n;g++){
             for(int i=0,j=g;j<n;i++,j++){
