@@ -15,21 +15,17 @@ public:
         vector<vector<int>> vec;
         if(root==NULL)
             return vec;
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            int size = q.size();
-            vector<int> temp; int i=0;
-            while(i<size){
-                TreeNode* current = q.front();
-                temp.push_back(current->val);
-                q.pop();
-                if(current->left) q.push(current->left);
-                if(current->right) q.push(current->right);
-                i++;
-            }
-            vec.push_back(temp);
-        }
+        helper(root,0,vec);
         return vec;
+    }
+    
+    void helper(TreeNode* root,int depth,vector<vector<int>> &vec){
+        if(root==NULL)
+            return;
+        if(depth>=vec.size())
+            vec.push_back({});
+        vec[depth].push_back(root->val);
+        helper(root->left,depth+1,vec);
+        helper(root->right,depth+1,vec);
     }
 };
