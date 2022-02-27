@@ -12,19 +12,23 @@
 class Solution {
 public:
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
-        vector<vector<int>> res;
-        helper(res,root,0);
-        reverse(res.begin(),res.end());
+        int d = depth(root);
+        vector<vector<int>> res(d,vector<int> {});
+        helper(res,root,d-1);
         return res;
+    }
+    
+    int depth(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        return max(depth(root->left) , depth(root->right))+1;
     }
     
     void helper(vector<vector<int>> &res,TreeNode* root,int depth){
         if(root==NULL)
             return;
-        if(depth>=res.size())
-            res.push_back({});
         res[depth].push_back(root->val);
-        helper(res,root->left,depth+1);
-        helper(res,root->right,depth+1);
+        helper(res,root->left,depth-1);
+        helper(res,root->right,depth-1);
     }
 };
