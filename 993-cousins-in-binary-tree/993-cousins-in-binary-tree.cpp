@@ -14,13 +14,12 @@ public:
     bool isCousins(TreeNode* root, int x, int y) {
         if(root->val==x || root->val==y)
             return false;
-        int parent = -1;
-        int left = helper(root,parent,x,0);
+        int xparent = -1;
+        int xdepth = helper(root,xparent,x,0);
         int yparent = -1;
-        int right = helper(root,yparent,y,0);
-        if(yparent != parent && left==right)
-            return true;
-        return false;
+        int ydepth = helper(root,yparent,y,0);
+        
+        return (xparent!=yparent) && (xdepth==ydepth);
     }
     
     int helper(TreeNode* root,int &parent,int value,int depth){
