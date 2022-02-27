@@ -12,27 +12,30 @@
 class Solution {
 public:
     bool isCousins(TreeNode* root, int x, int y) {
-        if(root->val==x || root->val==y)
-            return false;
-        int xparent = -1;
-        int xdepth = helper(root,xparent,x,0);
-        int yparent = -1;
-        int ydepth = helper(root,yparent,y,0);
-        
-        return (xparent!=yparent) && (xdepth==ydepth);
-    }
-    
-    int helper(TreeNode* root,int &parent,int value,int depth){
-        if(root==NULL)
-            return 0;
-        if(root->val==value)
-            return depth;
-        parent = root->val;
-        int left = helper(root->left,parent,value,depth+1);
-        if(left)
-            return left;
-        parent = root->val;
-        int right = helper(root->right,parent,value,depth+1);
-        return right;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int size = q.size();
+            bool xfound = false;
+            bool yfound = false;
+            int i=0;
+            while(i<size){
+                TreeNode* current = q.front();
+                q.pop();
+                if(current->val==x) xfound = true;
+                if(current->val==y) yfound = true;
+                if(current->left && current->right){
+                    if(current->left->val==x && current->right->val==y
+                      || current->left->val==y && current->right->val==x)
+                        return false;
+                }
+                if(current->left) q.push(current->left);
+                if(current->right) q.push(current->right);
+                i++;
+            }
+            if(xfound && yfound)
+                return true;
+        }
+        return false;
     }
 };
