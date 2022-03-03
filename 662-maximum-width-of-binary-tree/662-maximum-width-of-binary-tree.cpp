@@ -17,19 +17,21 @@ public:
         queue<pair<TreeNode*,int>> q;
         q.push({root,0});
         while(!q.empty()){
-            int count = q.size();
-            int start = q.front().second;
-            int end = q.back().second;
-            result = max(result,end-start+1);
-            for(int i=0;i<count;i++){
+            int size = q.size();
+            int minn = q.front().second;
+            int start,end;
+            for(int i=0;i<size;i++){
                 pair<TreeNode*,int> curr = q.front();
-                int idx = curr.second-start;
+                int idx = curr.second-minn;
                 q.pop();
+                if(i==0) start = idx;
+                if(i==size-1) end = idx;
                 if(curr.first->left)
                     q.push({curr.first->left,(long long)2*idx+1});
                 if(curr.first->right)
                     q.push({curr.first->right,(long long)2*idx+2});
             }
+            result = max(result,end-start+1);
         }
         return result;
     }
