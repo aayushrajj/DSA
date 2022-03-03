@@ -13,7 +13,7 @@ class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
         if(root==NULL) return 0;
-        int result = 1;
+        int result = 0;
         queue<pair<TreeNode*,int>> q;
         q.push({root,0});
         while(!q.empty()){
