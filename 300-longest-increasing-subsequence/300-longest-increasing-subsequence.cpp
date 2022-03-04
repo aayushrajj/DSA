@@ -5,14 +5,13 @@ public:
         vector<int> dp;
         dp.push_back(nums[0]);
         for(int i=1;i<n;i++){
-            if(nums[i]>dp.back()){
+            if(nums[i]>dp.back())
                 dp.push_back(nums[i]);
-            }
             else{
                 int k = lower_bound(dp.begin(),dp.end(),nums[i])-dp.begin();
                 dp[k] = nums[i];
             }
         }
-        return dp.size();       
+        return dp.size();
     }
 };
