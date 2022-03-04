@@ -17,24 +17,18 @@ public:
     }
 };
 */
-
-class Solution {
+class Solution { // 16 ms, faster than 98.53%
 public:
+    vector<vector<int>> ans;
     vector<vector<int>> levelOrder(Node* root) {
-        if(root==NULL) return {};
-        vector<vector<int>> res;
-        helper(root,res,0);
-        return res;
+        dfs(root, 0);
+        return ans;
     }
-    
-    void helper(Node* root,vector<vector<int>> &res,int depth){
-        if(root==NULL)
-            return;
-        if(depth>=res.size())
-            res.push_back({});
-        res[depth].push_back(root->val);
-        for(int i=0;i<root->children.size();i++){
-            helper(root->children[i],res,depth+1);
-        }
+    void dfs(Node* root, int level) {
+        if (root == nullptr) return;
+        if (level == ans.size()) ans.emplace_back(); // Need more level -> Add new level
+        ans[level].push_back(root->val);
+        for (Node* child : root->children)
+            dfs(child, level + 1);
     }
 };
