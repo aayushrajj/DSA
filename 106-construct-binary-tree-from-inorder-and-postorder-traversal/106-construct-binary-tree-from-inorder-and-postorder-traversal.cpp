@@ -16,7 +16,9 @@ public:
         for(int i=0;i<inorder.size();i++){
             inmap[inorder[i]] = i;
         }
-        TreeNode* root = buildTree(postorder,0,postorder.size()-1,inorder,0,inorder.size()-1,inmap);
+        
+        TreeNode* root = buildTree(postorder,0,postorder.size()-1,
+                                   inorder,0,inorder.size()-1,inmap);
         return root;
     }
     
@@ -31,7 +33,6 @@ public:
                                inorder,inStart,inRoot-1,inmap);
         root->right = buildTree(postorder,postStart+numsleft,postEnd-1,
                                 inorder,inRoot+1,inEnd,inmap);
-
         return root;
     }
 };
