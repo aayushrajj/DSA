@@ -16,20 +16,21 @@ public:
         for(int i=0;i<inorder.size();i++){
             inmap[inorder[i]] = i;
         }
-        TreeNode* root = buildTree(preorder,0,preorder.size()-1,
-                                  inorder,0,inorder.size()-1,inmap);
+        TreeNode* root = buildTree(preorder,0,preorder.size()-1,inorder,0,inorder.size()-1,inmap);
         return root;
     }
     
     TreeNode* buildTree(vector<int> &preorder,int preStart,int preEnd,
-                       vector<int> &inorder,int inStart,int inEnd,map<int,int> &inmap){
+                        vector<int> &inorder,int inStart,int inEnd,map<int,int> &inmap){
         if(preStart>preEnd || inStart>inEnd)
             return NULL;
         TreeNode* root = new TreeNode(preorder[preStart]);
         int inRoot = inmap[root->val];
         int numsleft = inRoot-inStart;
-        root->left = buildTree(preorder,preStart+1,preEnd,inorder,inStart,inRoot-1,inmap);
-        root->right = buildTree(preorder,preStart+numsleft+1,preEnd,inorder,inRoot+1,inEnd,inmap);
+        root->left = buildTree(preorder,preStart+1,preStart+numsleft,
+                               inorder,inStart,inRoot-1,inmap);
+        root->right = buildTree(preorder,preStart+numsleft+1,preEnd,
+                                inorder,inRoot+1,inEnd,inmap);
         return root;
     }
 };
