@@ -28,11 +28,10 @@ public:
         while(!st.empty()){
             Node* curr = st.top();
             st.pop();
-            for(int i=0;i<curr->children.size();i++)
-                st.push(curr->children[i]);
-            res.push_back(curr->val);
+            for(auto child : curr->children)
+                st.push(child);
+            res.insert(res.begin(),curr->val);
         }
-        reverse(res.begin(),res.end());
         return res;
     }
 };
