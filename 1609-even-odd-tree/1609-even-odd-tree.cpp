@@ -17,33 +17,22 @@ public:
         int depth = 0;
         while(!q.empty()){
             int size = q.size();
-            vector<int> temp;
-            for(int i=0;i<size;i++){
+            int prev = -1;
+            while(size--){
                 TreeNode* curr = q.front();
                 q.pop();
-                temp.push_back(curr->val);
+                if(depth==0){
+                    if(curr->val%2==0) return false;
+                    if(curr->val<=prev) return false;
+                }
+                else{
+                    if(curr->val%2!=0) return false;
+                    if(prev>0 && curr->val>=prev) return false;
+                }
+                prev = curr->val;
                 if(curr->left) q.push(curr->left);
                 if(curr->right) q.push(curr->right);
             }
-            if(depth==0){
-                int prev=temp[0];
-                if(prev%2==0) return false;
-                for(int i=1;i<temp.size();i++){
-                    if(temp[i]%2==0 || temp[i]<=prev)
-                        return false;
-                    prev = temp[i];
-                }
-            }
-            else{
-                int prev=temp[0];
-                if(prev%2!=0) return false;
-                for(int i=1;i<temp.size();i++){
-                    if(temp[i]%2!=0 || temp[i]>=prev)
-                        return false;
-                    prev = temp[i];
-                }
-            }
-            temp.clear();
             depth = !depth;
         }
         return true;
