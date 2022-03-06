@@ -21,17 +21,15 @@ public:
 class Solution {
 public:
     vector<int> postorder(Node* root) {
-        if(root==NULL) return {};
         vector<int> res;
-        stack<Node*> st;
-        st.push(root);
-        while(!st.empty()){
-            Node* curr = st.top();
-            st.pop();
-            for(auto child : curr->children)
-                st.push(child);
-            res.insert(res.begin(),curr->val);
-        }
+        helper(root,res);
         return res;
+    }
+    
+    void helper(Node* root,vector<int> &res){
+        if(root==NULL) return;
+        for(auto child : root->children)
+            helper(child,res);
+        res.push_back(root->val);
     }
 };
