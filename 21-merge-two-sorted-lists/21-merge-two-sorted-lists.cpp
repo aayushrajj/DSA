@@ -14,8 +14,7 @@ public:
         return helper(list1,list2);
     }
     
-    //helper function
-    ListNode* helper(ListNode* l1, ListNode* l2){
+    ListNode* helper(ListNode* l1 , ListNode* l2){
         ListNode* temp1 = l1;
         ListNode* temp2 = l2;
         ListNode* dummy = new ListNode;
@@ -25,19 +24,25 @@ public:
         while(temp1 && temp2){
             if(temp1->val<=temp2->val){
                 sorting->next = temp1;
+                sorting = sorting->next;
                 temp1 = temp1->next;
             }
             else{
                 sorting->next = temp2;
+                sorting = sorting->next;
                 temp2 = temp2->next;
             }
-            sorting = sorting->next;
         }
-        if(temp1)
+        while(temp1){
             sorting->next = temp1;
-        if(temp2)
+            sorting = sorting->next;
+            temp1 = temp1->next;
+        }
+        while(temp2){
             sorting->next = temp2;
-        
+            sorting = sorting->next;
+            temp2 = temp2->next;
+        }
         return dummy->next;
     }
 };
