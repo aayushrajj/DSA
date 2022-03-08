@@ -10,30 +10,19 @@
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        vector<TreeNode*> first;
-        vector<TreeNode*> second;
-        helper(root,p,first);
-        helper(root,q,second);
-        for(auto i=0;i<first.size();i++){
-            for(auto j=0;j<second.size();j++){
-                if(first[i]==second[j])
-                    return first[i];
-            }
-        }
-        return NULL;
+        return helper(root,p,q);
     }
     
-    void helper(TreeNode* root,TreeNode* val,vector<TreeNode*> &vec){
-        if(root==NULL) return;
-        if(root==val){
-            vec.push_back(root);
-            return;
+    TreeNode* helper(TreeNode* root,TreeNode* p,TreeNode* q){
+        if(root==NULL) return root;
+        if(root==p || root==q){
+            return root;
         }
-        helper(root->left,val,vec);
-        if(vec.size()==0){
-            helper(root->right,val,vec);
-        }
-        if(vec.size()!=0)
-            vec.push_back(root);
+        TreeNode* left = helper(root->left,p,q);
+        TreeNode* right = helper(root->right,p,q);
+        if(left!=NULL && right!=NULL)
+            return root;
+        else
+            return (left==NULL) ? right : left;
     }
 };
