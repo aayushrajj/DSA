@@ -15,14 +15,12 @@ public:
     
     TreeNode* helper(TreeNode* root,TreeNode* p,TreeNode* q){
         if(root==NULL) return root;
-        if(root==p || root==q){
+        if(root==p || root==q)
             return root;
-        }
         TreeNode* left = helper(root->left,p,q);
         TreeNode* right = helper(root->right,p,q);
-        if(left!=NULL && right!=NULL)
+        if(left && right)
             return root;
-        else
-            return (left==NULL) ? right : left;
+        return (left==NULL) ? right : left;
     }
 };
