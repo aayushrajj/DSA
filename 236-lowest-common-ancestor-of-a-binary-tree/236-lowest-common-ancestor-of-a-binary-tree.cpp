@@ -23,17 +23,17 @@ public:
         return NULL;
     }
     
-    void helper(TreeNode* root,TreeNode* p,vector<TreeNode*> &first){
+    void helper(TreeNode* root,TreeNode* val,vector<TreeNode*> &vec){
         if(root==NULL) return;
-        if(root==p){
-            first.push_back(root);
+        if(root==val){
+            vec.push_back(root);
             return;
         }
-        helper(root->left,p,first);
-        if(first.size()==0){
-            helper(root->right,p,first);
+        helper(root->left,val,vec);
+        if(vec.size()==0){
+            helper(root->right,val,vec);
         }
-        if(first.size()!=0)
-            first.push_back(root);
+        if(vec.size()!=0)
+            vec.push_back(root);
     }
 };
