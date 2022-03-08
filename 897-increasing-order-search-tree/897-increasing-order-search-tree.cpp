@@ -15,8 +15,8 @@ public:
         TreeNode* temp;
         TreeNode* dummy = new TreeNode();
         temp = dummy;
-        helper(root,dummy);
-        return temp->right;
+        helper(root,temp);
+        return dummy->right;
     }
     
     void helper(TreeNode* root,TreeNode* &temp){
