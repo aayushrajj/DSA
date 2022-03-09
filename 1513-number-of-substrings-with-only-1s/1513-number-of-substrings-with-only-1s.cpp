@@ -17,7 +17,7 @@ public:
         }
         int n = j-i;
         count += n*(n+1)/2;
-        count = count%mod;
+        count %= mod;
         return count;
     }
 };
