@@ -1,14 +1,12 @@
 class Solution {
 public:
     int numEquivDominoPairs(vector<vector<int>>& dominoes) {
-        int n = dominoes.size();
         int count = 0;
-        unordered_map<int,int> freq;
-        for(int i=0;i<n;i++){
-            int first = min(dominoes[i][0],dominoes[i][1]);
-            int second = max(dominoes[i][0],dominoes[i][1]);
-            int sum = first*10+second;
-            count += freq[sum]++;         
+        map<pair<int,int>,int> freq;
+        for(auto v : dominoes){
+            if(v[0]>v[1])
+                swap(v[0],v[1]);
+            count += freq[make_pair(v[0],v[1])]++;         
         }
         return count;
     }
