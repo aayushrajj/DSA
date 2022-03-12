@@ -14,17 +14,15 @@ public:
     bool isUnivalTree(TreeNode* root) {
         if(root==NULL)
             return true;
-        queue<TreeNode*> q;
-        q.push(root);
         int check = root->val;
-        while(!q.empty()){
-            TreeNode* curr = q.front();
-            q.pop();
-            if(curr->val!=check)
-                return false;
-            if(curr->left) q.push(curr->left);
-            if(curr->right) q.push(curr->right);
-        }
-        return true;
+        return helper(root,check);
+    }
+    
+    bool helper(TreeNode* root,int check){
+        if(root==NULL)
+            return true;
+        if(root->val!=check)
+            return false;
+        return helper(root->left,check) && helper(root->right,check);
     }
 };
