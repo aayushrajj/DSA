@@ -8,11 +8,7 @@ public:
             int first = min(dominoes[i][0],dominoes[i][1]);
             int second = max(dominoes[i][0],dominoes[i][1]);
             int sum = first*10+second;
-            freq[sum]++;         
-        }
-        for(auto v : freq){
-            if(v.second>0)
-                count += (v.second*(v.second-1))/2;
+            count += freq[sum]++;         
         }
         return count;
     }
