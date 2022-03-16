@@ -3,8 +3,8 @@ public:
     string minWindow(string s, string t) {
         string ans = "";
         unordered_map<char,int> map2;
-        for(auto c : t){
-            map2[c]++;
+        for(auto v : t){
+            map2[v]++;
         }
         int matchcount = 0;
         int desiredcount = t.length();
@@ -13,7 +13,6 @@ public:
         while(true){
             bool flag1 = false;
             bool flag2 = false;
-            
             //acquire
             while(i<s.length() && matchcount<desiredcount){
                 map1[s[i]]++;
@@ -23,7 +22,7 @@ public:
                 flag1 = true;
             }
             
-            //collect answers and release
+            //collect answer and release
             while(j<i && matchcount==desiredcount){
                 string pans = s.substr(j,i-j);
                 if(ans.length()==0 || ans.length()>pans.length())
@@ -41,6 +40,7 @@ public:
             if(flag1==false && flag2==false)
                 break;
         }
+        
         return ans;
     }
 };
