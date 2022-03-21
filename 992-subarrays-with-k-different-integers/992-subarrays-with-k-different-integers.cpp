@@ -2,9 +2,9 @@ class Solution {
 public:
     int subarraysWithKDistinct(vector<int>& nums, int k) {
         int n = nums.size();
-        int j=0,nsub=0,res=0,maxi=0,count=0;
+        int i=0,j=0,nsub=0,res=0,maxi=0,count=0;
         unordered_map<int,int> map;
-        for(int i=0;i<n;i++){
+        while(i<n){
             map[nums[i]]++;
             if(map[nums[i]]==1)
                 count++;
@@ -23,6 +23,7 @@ public:
                     count--;
                 j++;
             }
+            i++;
         }
         return res;
     }
