@@ -1,30 +1,25 @@
 class Solution {
 public:
     int subarraysWithKDistinct(vector<int>& nums, int k) {
+        return helper(nums,k) - helper(nums,k-1);
+    }
+    
+    int helper(vector<int> &nums , int k){
         int n = nums.size();
-        int i=0,j=0,nsub=0,res=0,maxi=0,count=0;
+        int total=0,j=0;
         unordered_map<int,int> map;
-        while(i<n){
+        for(int i=0;i<n;i++){
             map[nums[i]]++;
-            if(map[nums[i]]==1)
-                count++;
-            
-            if(count==k){
-                maxi = i;
-                while(maxi+1<n && map[nums[maxi+1]]>0)
-                    maxi++;
-                nsub = maxi-i+1;
+            if(map.size()>k){
+                while(map.size()>k){
+                    map[nums[j]]--;
+                    if(map[nums[j]]==0)
+                        map.erase(nums[j]);
+                    j++;
+                }
             }
-            
-            while(count==k && j<n){
-                res += nsub;
-                map[nums[j]]--;
-                if(map[nums[j]]==0)
-                    count--;
-                j++;
-            }
-            i++;
+            total += i-j+1;
         }
-        return res;
+        return total;
     }
 };
