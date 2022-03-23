@@ -6,18 +6,11 @@ public:
         int product = 1;
         int left=0,right=0,count=0;
         while(right<n){
-            if(product * nums[right] < k){
-                product *= nums[right];
-                count += right-left+1;
-                right++;
-            }
-            else{
-                if(left<right)
-                    product /= nums[left];
-                else
-                    right++;
-                left++;
-            }
+            product *= nums[right];
+            while(product>=k)
+                product /= nums[left] , left++;
+            count += right-left+1;
+            right++;
         }
         return count;
     }
