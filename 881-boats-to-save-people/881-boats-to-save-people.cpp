@@ -16,7 +16,7 @@ public:
                 j-- , i++;
             }
             else{
-                if(people[j]<=limit)
+                // if(people[j]<=limit)
                     count++ , j--;
             }
         }
