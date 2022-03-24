@@ -5,7 +5,7 @@ public:
         vector<long> sum(n,0);
         sum[0] = nums[0];
         deque<int> q;
-        int res = n+1;
+        int res = INT_MAX;
         for(int i=0;i<n;i++){
             if(i>0)
                 sum[i] += sum[i-1]+nums[i];
@@ -17,6 +17,6 @@ public:
                 q.pop_back();
             q.push_back(i);
         }
-        return res<=n ? res : -1;
+        return res==INT_MAX ? -1 : res;
     }
 };
