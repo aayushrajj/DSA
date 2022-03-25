@@ -1,6 +1,8 @@
 class Solution {
 public:
     int numberOfSubarrays(vector<int>& nums, int k) {
+        // total number of substrings with at most k diff integers -
+        // total number of substrings with at most k-1 diff integers
         return helper(nums,k) - helper(nums,k-1);
     }
     
