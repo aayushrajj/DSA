@@ -1,13 +1,11 @@
-// bool mysort(const vector<int> &a,const vector<int> &b){
-//     return a[0]-a[1] < b[0]-b[1];
-// }
+bool mysort(const vector<int> &a,const vector<int> &b){
+    return (a[0]-a[1]) < (b[0]-b[1]);
+}
 
 class Solution {
 public:
     int twoCitySchedCost(vector<vector<int>>& costs) {
-        sort(costs.begin(), costs.end(), [](const vector<int>&a, const vector<int>&b){
-            return (a[0] - a[1]) < (b[0] - b[1]);
-        });
+        sort(costs.begin(), costs.end(),mysort);
         
         int price = 0;
         for(int i = 0; i < costs.size() / 2; i++){
