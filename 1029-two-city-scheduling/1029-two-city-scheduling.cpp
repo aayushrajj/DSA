@@ -1,5 +1,6 @@
 bool mysort(const vector<int> &a,const vector<int> &b){
-    return (a[0]-a[1]) < (b[0]-b[1]);
+    // profit after going to city a i.e. Bcost - Acost
+    return (a[1]-a[0]) > (b[1]-b[0]);
 }
 
 class Solution {
