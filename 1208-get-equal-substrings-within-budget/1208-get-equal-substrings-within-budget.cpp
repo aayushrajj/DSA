@@ -7,7 +7,6 @@ public:
         while(j<n){
             prediff += abs( (s[j]-'a')-(t[j]-'a') );
             while(prediff>maxCost){
-                maxlen = max(maxlen,j-i);
                 prediff -= abs( (s[i]-'a')-(t[i]-'a') );
                 i++;
             }
