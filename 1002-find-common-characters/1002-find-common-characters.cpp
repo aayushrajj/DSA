@@ -1,12 +1,10 @@
 class Solution {
 public:
     vector<string> commonChars(vector<string>& words) {
-        vector<int> common(26);
+        vector<int> common(26,INT_MAX);
         vector<int> temp(26);
         vector<string> res;
-        for(auto v : words[0])
-            common[v-'a']++;
-        for(int i=1;i<words.size();i++){
+        for(int i=0;i<words.size();i++){
             for(auto v : words[i])
                 temp[v-'a']++;
             for(int j=0;j<common.size();j++){
