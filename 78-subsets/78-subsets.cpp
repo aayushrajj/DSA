@@ -6,7 +6,7 @@ public:
             int n = res.size();
             for(int j=0;j<n;j++){
                 res.push_back(res[j]);
-                res[j].push_back(nums[i]);
+                res.back().push_back(nums[i]);
             }
         }
         return res;
