@@ -13,11 +13,13 @@ public:
                 hash.insert(seq);
             return;
         }
+        // jb current element ko include kr rhe (with ofcourse checking given cond)
         if(seq.empty() || nums[i]>=seq.back()){
             seq.push_back(nums[i]);
             backtrack(nums,seq,hash,i+1);
             seq.pop_back();
         }
+        // jb we are not including the current element
         backtrack(nums,seq,hash,i+1);
     }
 };
