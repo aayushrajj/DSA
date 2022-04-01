@@ -1,25 +1,19 @@
 class Solution {
 public:
     vector<vector<int>> findSubsequences(vector<int>& nums) {
-        vector<int> seq;
+        vector<vector<int>> res{{}};
         set<vector<int>> hash;
-        backtrack(nums,seq,hash,0);
+        for(int i=0;i<nums.size();i++){
+            int n = res.size();
+            for(int j=0;j<n;j++){
+                if(res[j].empty() || nums[i]>=res[j].back()){
+                    res.push_back(res[j]);
+                    if(res.back().size()>1) hash.insert(res.back());
+                    res.back().push_back(nums[i]);
+                    if(res.back().size()>1) hash.insert(res.back());
+                }
+            }
+        }
         return vector<vector<int>>(hash.begin(),hash.end());
-    }
-    
-    void backtrack(vector<int> &nums,vector<int> seq,set<vector<int>> &hash,int i){
-        if(i==nums.size()){
-            if(seq.size()>1)
-                hash.insert(seq);
-            return;
-        }
-        // jb current element ko include kr rhe (with ofcourse checking given cond)
-        if(seq.empty() || nums[i]>=seq.back()){
-            seq.push_back(nums[i]);
-            backtrack(nums,seq,hash,i+1);
-            seq.pop_back();
-        }
-        // jb we are not including the current element
-        backtrack(nums,seq,hash,i+1);
     }
 };
