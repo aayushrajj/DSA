@@ -1,29 +1,27 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
+    vector<vector<int>> res;
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<int> currComb;
-        int currIndex=0;
-        int currSum=0;
-        combinations(candidates,target,currComb,currSum,currIndex);
-        return ans;
+        vector<int> currVec;
+        int currSum = 0;
+        backtrack(candidates,target,currSum,currVec,0);
+        return res;
     }
     
-    void combinations(vector<int> &candidates,int target,vector<int> currComb,int currSum,int currIndex){
-        if(currSum > target)
+    void backtrack(vector<int>& candidates,int target,int currSum,vector<int> currVec,int currIdx){
+        if(currSum>target)
             return;
         if(currSum==target){
-            ans.push_back(currComb);
+            res.push_back(currVec);
             return;
         }
         
-        for(int i=currIndex;i<candidates.size();i++){
-            currComb.push_back(candidates[i]);
+        for(int i=currIdx;i<candidates.size();i++){
+            currVec.push_back(candidates[i]);
             currSum += candidates[i];
-            combinations(candidates,target,currComb,currSum,i);
-            currComb.pop_back();
+            backtrack(candidates,target,currSum,currVec,i);
             currSum -= candidates[i];
+            currVec.pop_back();
         }
     }
-
 };
