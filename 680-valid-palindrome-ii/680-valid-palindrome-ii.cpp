@@ -3,7 +3,6 @@ public:
     bool validPalindrome(string s) {
         int n = s.length();
         int left=0,right=n-1;
-        int count=0;
         while(left<right){
             if(s[left]!=s[right]){
                 return (checkPal(s,left,right-1) || checkPal(s,left+1,right));
