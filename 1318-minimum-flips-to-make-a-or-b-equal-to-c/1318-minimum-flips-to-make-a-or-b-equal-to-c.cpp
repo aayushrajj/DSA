@@ -13,6 +13,7 @@ public:
                 if(b&1)
                     count++;
             }
+            //moving through the bits right to left
             a >>= 1;
             b >>= 1;
             c >>= 1;
