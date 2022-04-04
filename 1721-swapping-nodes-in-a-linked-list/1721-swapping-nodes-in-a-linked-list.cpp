@@ -10,24 +10,18 @@
  */
 class Solution {
 public:
-    int maxcount=INT_MIN;
-    ListNode* st = NULL;
     ListNode* swapNodes(ListNode* head, int k) {
-        int count=1;
-        return swapping(head,k,count);
-    }
-    
-    ListNode* swapping(ListNode* head,int k,int count){
-        if(head==NULL)
-            return NULL;
-        maxcount = max(maxcount,count);
-        swapping(head->next,k,count+1);
-        if(count==k or maxcount-count==k-1){
-            if(st==NULL)
-                st = head;
-            else
-                swap(head->val,st->val);
+        ListNode* first = head;
+        ListNode* second = head;
+        ListNode* curr = head;
+        int count = 1;
+        while(curr){
+            if(count<k) first = first->next;
+            if(count>k) second = second->next;
+            count++;
+            curr = curr->next;
         }
+        swap(first->val,second->val);
         return head;
     }
 };
