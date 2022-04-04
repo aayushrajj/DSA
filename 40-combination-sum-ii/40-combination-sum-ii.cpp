@@ -3,13 +3,13 @@ public:
     vector<vector<int>> res;
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         vector<int> currVec;
-        int currSum=0;
-        sort(candidates.begin(),candidates.end());
-        helper(candidates,target,currSum,currVec,0);
+        int currSum = 0;
+        sort(begin(candidates),end(candidates));
+        backtrack(candidates,target,currVec,currSum,0);
         return res;
     }
     
-    void helper(vector<int> &candidates,int target,int currSum,vector<int> &currVec,int currIdx){
+    void backtrack(vector<int>& candidates,int target,vector<int> currVec,int currSum,int currIdx){
         if(currSum>target)
             return;
         if(currSum==target){
@@ -21,7 +21,7 @@ public:
                 continue;
             currVec.push_back(candidates[i]);
             currSum += candidates[i];
-            helper(candidates,target,currSum,currVec,i+1);
+            backtrack(candidates,target,currVec,currSum,i+1);
             currSum -= candidates[i];
             currVec.pop_back();
         }
