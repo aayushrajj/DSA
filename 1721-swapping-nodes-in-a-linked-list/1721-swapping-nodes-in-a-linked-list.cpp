@@ -10,20 +10,23 @@
  */
 class Solution {
 public:
+    int maxcount=INT_MIN;
+    ListNode* st = NULL;
     ListNode* swapNodes(ListNode* head, int k) {
-        ListNode* temp = head;
-        ListNode* ans = head;
-        vector<int> vec;
-        while(temp){
-            vec.push_back(temp->val);
-            temp = temp->next;
-        }
-        swap(vec[k-1],vec[vec.size()-k]);
-        int j=0;
-        while(ans){
-            ans->val = vec[j];
-            ans = ans->next;
-            j++;
+        int count=1;
+        return swapping(head,k,count);
+    }
+    
+    ListNode* swapping(ListNode* head,int k,int count){
+        if(head==NULL)
+            return NULL;
+        maxcount = max(maxcount,count);
+        swapping(head->next,k,count+1);
+        if(count==k or maxcount-count==k-1){
+            if(st==NULL)
+                st = head;
+            else
+                swap(head->val,st->val);
         }
         return head;
     }
