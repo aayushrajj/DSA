@@ -17,16 +17,9 @@ public:
     }
     
     int add(int val) {
-        if(pq.size()<n)
-        {
-            pq.push(val);
-        }
-        else{
-            if(pq.top()<val){
-                pq.pop();
-                pq.push(val);
-            }
-        }
+        pq.push(val);
+        if(pq.size()>n)
+            pq.pop();
         return pq.top();
     }
 };
