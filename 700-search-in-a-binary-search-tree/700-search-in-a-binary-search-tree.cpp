@@ -12,22 +12,19 @@
 class Solution {
 public:
     TreeNode* searchBST(TreeNode* root, int val) {
-        if(root->val==val)
-            return root;
-        else if(helper(root->left,val))
-            return helper(root->left,val);
-        else
-            return helper(root->right,val);
+        TreeNode* newroot = NULL;
+        find(root,val,newroot);
+        return newroot;
     }
     
-    TreeNode* helper(TreeNode* root,int val){
+    void find(TreeNode* root,int val,TreeNode* &newroot){
         if(root==NULL)
-            return NULL;
-        if(root->val==val)
-            return root;
-        TreeNode* left = helper(root->left,val);
-        if(left)
-            return left;
-        return helper(root->right,val);
+            return;
+        if(root->val==val){
+            newroot = root;
+            return;
+        }
+        find(root->left,val,newroot);
+        find(root->right,val,newroot);
     }
 };
