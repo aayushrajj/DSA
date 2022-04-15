@@ -13,28 +13,20 @@ class Solution {
 public:
     vector<string> binaryTreePaths(TreeNode* root) {
         vector<string> res;
-        stack<string> sStr;
-        stack<TreeNode*> sNode;
-        if(root==NULL)
-            return res;
-        sNode.push(root);
-        sStr.push(to_string(root->val));
-        while(!sNode.empty()){
-            TreeNode* curr = sNode.top(); sNode.pop();
-            string currStr = sStr.top(); sStr.pop();
-            if(curr->left==NULL && curr->right==NULL){
-                res.push_back(currStr);
-                continue;
-            }
-            if(curr->left!=NULL){
-                sNode.push(curr->left);
-                sStr.push(currStr + "->" + to_string(curr->left->val));
-            }
-            if(curr->right!=NULL){
-                sNode.push(curr->right);
-                sStr.push(currStr + "->" + to_string(curr->right->val));
-            }
-        }
+        if(root==NULL) return res;
+        helper(root,to_string(root->val),res);
         return res;
+    }
+    
+    void helper(TreeNode* root , string path , vector<string> &res){
+        if(root->left==NULL && root->right==NULL){
+            res.push_back(path);
+            // return;
+        }
+        if(root->left!=NULL)
+            helper(root->left,path + "->" + to_string(root->left->val) , res);
+        if(root->right!=NULL)
+            helper(root->right,path + "->" + to_string(root->right->val) , res);
+        // return;
     }
 };
