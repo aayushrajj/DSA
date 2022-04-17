@@ -12,24 +12,19 @@
 class Solution {
 public:
     TreeNode* increasingBST(TreeNode* root) {
-        stack<TreeNode*> st;
         TreeNode* temp;
         TreeNode* dummy = new TreeNode();
         temp = dummy;
-        while(root || !st.empty()){
-            if(root){
-                st.push(root);
-                root = root->left;
-            }
-            else{
-                TreeNode* curr = st.top();
-                st.pop();
-                root = curr->right;
-                curr->left = NULL;
-                temp->right = new TreeNode(curr->val); 
-                temp = temp->right;
-            }
-        }
+        inOrder(root,temp);
         return dummy->right;
+    }
+    
+    void inOrder(TreeNode* root , TreeNode* &temp){
+        if(root==NULL)
+            return;
+        inOrder(root->left,temp);
+        temp->right = new TreeNode(root->val);
+        temp = temp->right;
+        inOrder(root->right,temp);
     }
 };
