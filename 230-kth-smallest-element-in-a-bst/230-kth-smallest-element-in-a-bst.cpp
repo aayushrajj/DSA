@@ -12,13 +12,13 @@
 class Solution {
 public:
     int count=1;
-    int ans=0;
+    int ans =0;
     int kthSmallest(TreeNode* root, int k) {
         inOrder(root,k);
         return ans;
     }
     
-    void inOrder(TreeNode* root , int k){
+    void inOrder(TreeNode* root,int k){
         if(root==NULL)
             return;
         inOrder(root->left,k);
