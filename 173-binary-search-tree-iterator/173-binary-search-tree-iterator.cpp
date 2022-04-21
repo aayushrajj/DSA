@@ -16,26 +16,23 @@ public:
     }
     
     int next() {
-        curr++;
-        return vec[curr-1];
+        TreeNode* curr = s.top();
+        s.pop();
+        inOrder(curr->right);
+        return curr->val;
     }
     
     bool hasNext() {
-        if(curr < vec.size())
-            return true;
-        else
-            return false;
+        return !s.empty();
     }
     
 private:
+    stack<TreeNode*> s; 
     void inOrder(TreeNode* root){
         if(root==NULL) return;
+        s.push(root);
         inOrder(root->left);
-        vec.push_back(root->val);
-        inOrder(root->right);
     }
-    vector<int> vec;
-    int curr = 0;
 };
 
 /**
