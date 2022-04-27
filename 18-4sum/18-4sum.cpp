@@ -14,14 +14,16 @@ public:
                 int low = j+1;
                 int high = n-1;
                 while(low<high){
-                    ll sum = (ll)nums[i]+(ll)nums[j]+(ll)nums[low]+(ll)nums[high];
-                    if(target-sum==0){
+                    int sub_target = target - nums[i] - nums[j];
+                    int sum = nums[low] + nums[high];
+                    // ll sum = (ll)nums[i]+(ll)nums[j]+(ll)nums[low]+(ll)nums[high];
+                    if(sub_target==sum){
                         res.push_back({nums[i],nums[j],nums[low],nums[high]});
                         low++;
                         while(low<high && nums[low]==nums[low-1])
                             low++;
                     }
-                    else if(sum < target)
+                    else if(sum < sub_target)
                         low++;
                     else
                         high--;
