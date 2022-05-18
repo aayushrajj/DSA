@@ -1,5 +1,7 @@
 class MinStack {
 public:
+    
+    // using space
     stack<int> s;
     stack<int> ss;
     MinStack() {
