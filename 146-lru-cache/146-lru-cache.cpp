@@ -1,36 +1,84 @@
+class Node {
+public:
+    int key;
+    int value;
+    Node* next;
+    Node* prev;
+    
+    Node(int k, int val) {
+        key = k;
+        value = val;
+        next = nullptr;
+        prev = nullptr;
+    }
+};
 class LRUCache {
 public:
-    list<pair<int,int>> l;
-    unordered_map< int , list<pair<int,int>>::iterator> map;
-    int n;
+    int cap;
+    Node* head = new Node(-1, -1);
+    Node* tail = new Node(-1, -1);
+    unordered_map<int, Node*> mp;
+    
     LRUCache(int capacity) {
-       this->n = capacity; 
+        cap = capacity;
+        head->next = tail;
+        tail->prev = head;
+    }
+    
+    void addNode(Node* curr) {
+        curr->prev = head;
+        curr->next = head->next;
+        head->next = curr;
+        curr->next->prev = curr;
+    }
+    
+    void deleteNode(Node* curr) {
+        Node* temp = curr;
+        curr->prev->next = curr->next;
+        curr->next->prev = curr->prev;
+        delete temp;
     }
     
     int get(int key) {
-        if(map.find(key)==map.end())
-            return -1;
-        // It exists,so make it most recently used key, updated its address in map also
-        l.splice(l.begin() , l , map[key]);
-        return map[key]->second;
+        if(mp.find(key) == mp.end()) return -1;
+        
+        // make it the most recently used key;
+        Node* curr = mp[key];
+        int val = curr->value;
+        Node* newNode = new Node(key, val);
+        
+        mp.erase(key);
+        deleteNode(curr);        
+        
+        addNode(newNode);
+        mp[key] = head->next;       
+        
+        return val;
     }
     
     void put(int key, int value) {
-        if(map.find(key)!=map.end()){
-            l.splice(l.begin() , l , map[key]);
-            map[key]->second = value;
+        if(mp.find(key) != mp.end()) {
+            // update its address(as it becomes most recently used) and value
+            Node* curr = mp[key];
+            Node* newNode = new Node(key, value);
+            
+            deleteNode(curr);
+            mp.erase(key);
+            
+            addNode(newNode);
+            mp[key] = head->next;
             return;
         }
-        // else check size
-        if(map.size()==n){
-            auto lrukey = l.back().first;
-            l.pop_back();
-            map.erase(lrukey);
+        
+        // If size breach, remove LRU and then insert
+        if(mp.size() == cap) {
+            mp.erase(tail->prev->key);
+            deleteNode(tail->prev);
         }
         
-        // Now insert its new entry
-        l.push_front({key,value});
-        map[key] = l.begin();
+        // Add the new node
+        addNode(new Node(key, value));
+        mp[key] = head->next;
     }
 };
 
