@@ -42,7 +42,7 @@
 class Solution {
 public:
     
-    int dp[700][101][101];
+    int dp[601][101][101];
     
     int ans(vector<string> & strs, int m, int n, int i, unordered_map<int,pair<int,int>> &m1,int last)     {
         
