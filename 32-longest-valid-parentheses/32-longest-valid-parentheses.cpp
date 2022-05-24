@@ -13,9 +13,9 @@ public:
                     else
                         dp[i] = 2;
                 }
-                else if(i-dp[i-1]>0 && s[ (i-1)-dp[i-1] ]=='('){
+                else if(i-dp[i-1]>0 && s[i-1-dp[i-1] ]=='('){
                     if(i-dp[i-1]>=2)
-                        dp[i] = dp[i-1] + dp[i-dp[i-1]-2] + 2;
+                        dp[i] = dp[i-1] + 2 + dp[i-dp[i-1]-2];
                     else
                         dp[i] = dp[i-1] + 2;
                 }
