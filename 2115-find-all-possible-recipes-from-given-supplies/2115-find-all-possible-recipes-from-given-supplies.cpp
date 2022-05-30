@@ -1,32 +1,49 @@
 class Solution {
 public:
     vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
-        unordered_map<string,vector<string>> adj;
-        unordered_map<string,int> indegree;
-        
-        for(int i=0;i<ingredients.size();i++){
-            for(int j=0;j<ingredients[i].size();j++){
-                adj[ingredients[i][j]].push_back(recipes[i]);
-                indegree[recipes[i]]++;
-            }
-        }
-        
+        unordered_map<string,int> map1;
+        for(auto i : supplies)
+            map1[i] = 1;
+        int n = recipes.size();
+        vector<int> created(n,0);
         vector<string> res;
-        queue<string> q;
-        for(int i=0;i<supplies.size();i++){
-            q.push(supplies[i]);
-        }
-        
-        while(!q.empty()){
-            auto top = q.front();
-            q.pop();
-            for(auto i : adj[top]){
-                indegree[i]--;
-                if(indegree[i]==0){
-                    q.push(i);
-                    res.push_back(i);
+        int prevPossible = n;
+        while(1){
+            bool flag= false;
+            for(int i=0;i<n;i++){
+                if(created[i]==0) // check if atleast one recipe is not prepared yet
+                    flag = true;
+            }
+            if(!flag)
+                break;
+            for(int i=0;i<n;i++){
+                // if curr recipe is already prepared than continue;
+                if(created[i]==1)
+                    continue;
+                
+                bool check = true;
+                for(auto &j : ingredients[i]){
+                    // if needed ingredient is not available currently
+                    if( !map1.count(j) ){
+                        check = false;
+                        break;
+                    }
+                }
+                if(check==true){
+                    res.push_back(recipes[i]);
+                    map1[recipes[i]] = 1;
+                    created[i] = 1;
                 }
             }
+            int currPossible = 0;
+            for(int i=0;i<n;i++){
+                if(created[i]==1)
+                    currPossible++;
+            }
+            if(prevPossible==currPossible)
+                break;
+            else
+                prevPossible = currPossible;
         }
         return res;
     }
