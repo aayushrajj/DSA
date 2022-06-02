@@ -1,12 +1,6 @@
-bool static mycmp(pair<int,int> &a , pair<int,int> &b){
-    if(a.first==b.first)
-        return a.second > b.second;
-    return a.first < b.first;
-}
-
 class Solution {
 public:
-    vector<pair<int,int>> res;// {path,city}
+    vector<int> cityCount;
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
         vector<vector<pair<int,int>>> adj(n);
 
@@ -20,8 +14,15 @@ public:
             dijsktra(adj,distanceThreshold,n,i);
         }
         
-        sort(res.begin(),res.end(),mycmp);
-        return res[0].second;
+        int minCity = INT_MAX;
+        int ansCity = 0;
+        for(int i=0;i<cityCount.size();i++){
+            if(cityCount[i] <= minCity){
+                minCity = cityCount[i];
+                ansCity = i;
+            }
+        }
+        return ansCity;
     }
     
     void dijsktra(vector<vector<pair<int,int>>> &adj , int distanceThreshold , int n , int src){
@@ -50,6 +51,6 @@ public:
                 count++;
         }
         
-        res.push_back({count,src});
+        cityCount.push_back(count);
     }
 };
