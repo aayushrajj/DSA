@@ -1,21 +1,19 @@
 class Solution {
 public:
-    vector<vector<int>> children;
+    //bottom up
     int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
-        children.resize(n);
+        int res = 0;
         for(int i=0;i<n;i++){
-            if(manager[i]!=-1)
-                children[manager[i]].push_back(i);
+            res = max(res , dfs(manager,informTime,i));
         }
-        return dfs(headID,informTime);
+        return res;
     }
     
-    int dfs(int head , vector<int>& informTime){
-        int time = 0;
-        for(auto &child : children[head]){
-            time = max(time , dfs(child,informTime));
+    int dfs(vector<int> &manager , vector<int>& informTime , int node){
+        if(manager[node]!=-1){
+            informTime[node] += dfs(manager , informTime , manager[node]);
+            manager[node] = -1;
         }
-        
-        return informTime[head] + time;
+        return informTime[node];
     }
 };
