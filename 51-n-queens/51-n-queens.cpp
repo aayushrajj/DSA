@@ -2,7 +2,9 @@ class Solution {
 public:
     vector<vector<string>> res;
     vector<vector<string>> solveNQueens(int n) {
-        vector<string> board(n,string(n,'.'));
+        // this is just a vector of strings with each string size ==n and
+        // filled with .
+        vector<string> board(n,string(n,'.')); 
         dfs(board,0);
         return res;
     }
