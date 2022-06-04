@@ -1,3 +1,3 @@
 # DSA
-Data Structures and Algorithms Problems.
+Data Structures and Algorithms.
 Leetcode problems!
