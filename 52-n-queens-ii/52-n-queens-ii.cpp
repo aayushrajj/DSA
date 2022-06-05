@@ -18,10 +18,11 @@ public:
         return true;
     }
     
-    int backtrack(vector<vector<int>> &board , int row){
-        if(row==board.size()) return 1;
-        
+    int backtrack(vector<vector<int>> &board,int row){
+        if(row==board.size())
+            return 1;
         int count=0;
+        
         for(int j=0;j<board.size();j++){
             if(is_valid(board,row,j)){
                 board[row][j] = 1;
