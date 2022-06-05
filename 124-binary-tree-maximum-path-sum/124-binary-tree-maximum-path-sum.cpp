@@ -11,6 +11,8 @@
  */
 class Solution {
 public:
+    
+    //tech dose video best explaination
     int max1=0; int max2=0; int result=INT_MIN;
     int maxPathSum(TreeNode* root) {
         int temp = postOrder(root);
