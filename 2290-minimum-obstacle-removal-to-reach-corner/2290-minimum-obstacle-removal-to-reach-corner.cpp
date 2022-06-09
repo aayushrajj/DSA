@@ -1,3 +1,4 @@
+typedef pair<int , pair<int,int>> pi;
 class Solution {
 public:
     int minimumObstacles(vector<vector<int>>& grid) {
@@ -5,8 +6,8 @@ public:
         vector<int> dir={0,1,0,-1,0};
         vector<vector<int>> dist(m, vector<int> (n,INT_MAX));
         dist[0][0]=0;
-        priority_queue<pair<int,pair<int,int>> , vector<pair<int,pair<int,int>>> , greater<pair<int,pair<int,int>>> > pq;
-        pq.push({0,{0,0}});
+        priority_queue<pi , vector<pi> , greater<pi> > pq;
+        pq.push({0,{0,0}}); // {cost , {row ,col}}
         while(!pq.empty())
         {
             auto v=pq.top();
