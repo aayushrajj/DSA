@@ -1,34 +1,36 @@
-// typedef pair<int , pair<int,int>> pi;
-typedef tuple<int,int,int> pi;
+typedef tuple<int,int,int> ti;
 class Solution {
 public:
     int minimumObstacles(vector<vector<int>>& grid) {
-        int m=grid.size(), n=grid[0].size();
-        vector<int> dir={0,1,0,-1,0};
-        vector<vector<int>> dist(m, vector<int> (n,INT_MAX));
-        dist[0][0]=0;
-        priority_queue<pi , vector<pi> , greater<pi> > pq;
-        // pq.push({0,{0,0}}); // {cost , {row ,col}}
-        pq.push({0,0,0});
-        while(!pq.empty())
-        {
-            auto [d,i,j] = pq.top();
-            // auto v=pq.top();
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> effort(m,vector<int>(n,INT_MAX));
+        effort[0][0] = 0;
+        vector<vector<int>> dir = {{0,1} , {0,-1} , {1,0} , {-1,0}};
+        
+        priority_queue<ti , vector<ti> , greater<ti> > pq;
+        pq.push({0,0,0}); // {cost,cellrow,cellcol}
+        
+        while(!pq.empty()){
+            auto [cost,row,col] = pq.top();
             pq.pop();
-            // int i=v.second.first, j=v.second.second, d=v.first;
-            for(int k=0;k<4;k++)
-            {
-                int x=i+dir[k], y=j+dir[k+1];
-                if(x<0 || x>=m || y<0 || y>=n) continue;
-                
-                if(d+grid[x][y]<dist[x][y])
-                {
-                    dist[x][y]=d+grid[x][y];
-                    // pq.push({dist[x][y],{x,y}});
-                    pq.push({dist[x][y],x,y});
+            
+            if(row==m-1 && col==n-1)
+                return effort[m-1][n-1];
+            
+            for(auto d : dir){
+                int newrow = row + d[0];
+                int newcol = col + d[1];
+                if(newrow >=0 && newrow < m && newcol >=0 && newcol < n){
+                    int newcost = grid[newrow][newcol] + cost;
+                    if(effort[newrow][newcol] > newcost){
+                        effort[newrow][newcol] = newcost;
+                        pq.push({newcost,newrow,newcol});
+                    }
                 }
             }
         }
-        return dist[m-1][n-1];  
+        
+        return 0;
     }
 };
