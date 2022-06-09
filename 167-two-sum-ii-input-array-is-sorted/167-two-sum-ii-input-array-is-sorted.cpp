@@ -8,7 +8,6 @@ public:
             if(numbers[low]+numbers[high] == target)
                 return {low+1 , high+1};
             
-            int mid = high - (high-low)/2;
             if( numbers[low]+numbers[high] > target)
                 high--;
             else
