@@ -12,34 +12,18 @@
 class Solution {
 public:
     bool findTarget(TreeNode* root, int k) {
-        vector<int> store;
-        helper(root,store);
-        return twoSum(store,k);
+        return dfs(root, root,  k);
     }
     
-    void helper(TreeNode* root,vector<int>&store){
-        if(root==NULL)
-            return;
-        
-        helper(root->left,store);
-        store.push_back(root->val);
-        helper(root->right,store);
+    bool dfs(TreeNode* root,  TreeNode* cur, int k){
+        if(cur == NULL)return false;
+        return search(root, cur, k - cur->val) || dfs(root, cur->left, k) || dfs(root, cur->right, k);
     }
     
-    bool twoSum(vector<int>& numbers, int target) {
-        int low = 0;
-        int high = numbers.size()-1;
-        
-        while(low<high){
-            if(numbers[low]+numbers[high] == target)
-                return true;
-            
-            if( numbers[low]+numbers[high] > target)
-                high--;
-            else
-                low++;
-        }
-        
-        return false;
+    bool search(TreeNode* root, TreeNode *cur, int value){
+        if(root == NULL)return false;
+        return (root->val == value) && (root != cur) 
+            || (root->val < value) && search(root->right, cur, value) 
+                || (root->val > value) && search(root->left, cur, value);
     }
 };
