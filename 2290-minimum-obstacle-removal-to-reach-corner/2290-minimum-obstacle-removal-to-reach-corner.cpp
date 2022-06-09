@@ -1,4 +1,5 @@
-typedef pair<int , pair<int,int>> pi;
+// typedef pair<int , pair<int,int>> pi;
+typedef tuple<int,int,int> pi;
 class Solution {
 public:
     int minimumObstacles(vector<vector<int>>& grid) {
@@ -7,12 +8,14 @@ public:
         vector<vector<int>> dist(m, vector<int> (n,INT_MAX));
         dist[0][0]=0;
         priority_queue<pi , vector<pi> , greater<pi> > pq;
-        pq.push({0,{0,0}}); // {cost , {row ,col}}
+        // pq.push({0,{0,0}}); // {cost , {row ,col}}
+        pq.push({0,0,0});
         while(!pq.empty())
         {
-            auto v=pq.top();
+            auto [d,i,j] = pq.top();
+            // auto v=pq.top();
             pq.pop();
-            int i=v.second.first, j=v.second.second, d=v.first;
+            // int i=v.second.first, j=v.second.second, d=v.first;
             for(int k=0;k<4;k++)
             {
                 int x=i+dir[k], y=j+dir[k+1];
@@ -21,7 +24,8 @@ public:
                 if(d+grid[x][y]<dist[x][y])
                 {
                     dist[x][y]=d+grid[x][y];
-                    pq.push({dist[x][y],{x,y}});
+                    // pq.push({dist[x][y],{x,y}});
+                    pq.push({dist[x][y],x,y});
                 }
             }
         }
