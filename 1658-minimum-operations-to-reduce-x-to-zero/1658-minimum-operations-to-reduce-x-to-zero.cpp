@@ -12,7 +12,7 @@ public:
         
         while(j<n){
             window += nums[j];
-            while(i<=j && window > sum){
+            while(window > sum){
                 window -= nums[i];
                 i++;
             }    
