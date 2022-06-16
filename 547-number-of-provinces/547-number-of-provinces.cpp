@@ -1,24 +1,34 @@
 class Solution {
 public:
-    int findCircleNum(vector<vector<int>>& isConnected) {
-        int n = isConnected.size();
-        vector<int> visited(n,0);
-        int count = 0;
+    //union find
+    int findCircleNum(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        vector<int> ranks(n,0);
+        
+        // every city is connected to itself
         for(int i=0;i<n;i++){
-            if(!visited[i]){
-                dfs(isConnected,visited,i);
-                count++;
+            ranks[i] = i;
+        }
+        
+        int groups = n;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                if(matrix[i][j]){
+                    int rootI = find(i,ranks);
+                    int rootJ = find(j,ranks);
+                    if(rootI != rootJ){
+                        ranks[rootI] = rootJ;
+                        groups--;
+                    }
+                }
             }
         }
-        return count;
+        return groups;
     }
-    
-    void dfs(vector<vector<int>>& isConnected,vector<int> &visited,int city){
-        for(int other=0;other<isConnected.size();other++){
-            if(isConnected[city][other]==1 && !visited[other]){
-                visited[other] = 1;
-                dfs(isConnected,visited,other);
-            }
-        }
+
+    int find(int x,vector<int> &parents){
+        if(x!=parents[x])
+            parents[x] = find(parents[x],parents);
+        return parents[x];
     }
 };
