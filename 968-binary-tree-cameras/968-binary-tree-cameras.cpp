@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    int camera=0;
+    // int camera=0;
     enum Camera { no_need , no_camera , has_camera};
     int count=0;
     int minCameraCover(TreeNode* root) {
