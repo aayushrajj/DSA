@@ -18,12 +18,14 @@ public:
     }
     
     bool isCycle(vector<vector<int>> &graph , vector<bool> &visited , int currNode , int parent){
-        if(visited[currNode])
-            return true;
-        
         visited[currNode] = true;
+        
         for(auto &child : graph[currNode]){
-            if(child!=parent && isCycle(graph,visited,child,currNode))
+            if(!visited[child]){
+                if(isCycle(graph,visited,child,currNode))
+                   return true;
+            }
+            else if(child!=parent)
                 return true;
         }
         
