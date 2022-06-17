@@ -1,34 +1,47 @@
+class UnionFind{
+    vector<int> parents , ranks;
+public:
+    UnionFind(int n){
+        parents.resize(n);
+        ranks.resize(n);
+        for(int i=0;i<n;i++){
+            parents[i] = i;
+            ranks[i] = 1;
+        }
+    }
+    
+    int find(int x){
+        if(x!=parents[x])
+            parents[x] = find(parents[x]); //path compression
+        return parents[x];
+    }
+    
+    bool union_set(int x,int y){
+        int rootX = find(x);
+        int rootY = find(y);
+        if(rootX == rootY)
+            return true;
+        if(ranks[rootX] > ranks[rootY]){
+            parents[rootY] = rootX;
+        }
+        else{
+            parents[rootX] = rootY;
+            if(ranks[rootX]==ranks[rootY])
+                ranks[rootY]++;
+        }
+        return false;
+    }
+};
+
 class Solution {
 public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
         int n = edges.size();
-        vector<vector<int>> graph(n+1);
-        vector<bool> visited(n+1);
+        UnionFind uf(n);
         for(auto &e : edges){
-            
-            fill(visited.begin(),visited.end(),0);
-            graph[e[0]].push_back(e[1]);
-            graph[e[1]].push_back(e[0]);
-            
-            if(isCycle(graph,visited,e[0],0))
-                return e;
+            if( uf.union_set(e[0]-1,e[1]-1) )
+                return {e[0],e[1]};
         }
-        
         return {};
-    }
-    
-    bool isCycle(vector<vector<int>> &graph , vector<bool> &visited , int currNode , int parent){
-        visited[currNode] = true;
-        
-        for(auto &child : graph[currNode]){
-            if(!visited[child]){
-                if(isCycle(graph,visited,child,currNode))
-                   return true;
-            }
-            else if(child!=parent)
-                return true;
-        }
-        
-        return false;
     }
 };
