@@ -14,17 +14,16 @@ public:
     }
     
     bool dfs(vector<vector<int>>& graph,vector<int> &visited,int node){
-        visited[node] = 1;
+        if(visited[node])
+            return visited[node]==1; // is not fully explored but visited then false
+        
+        visited[node] = -1;
         
         for(auto &v : graph[node]){
-            if(visited[v]==1)
+            if(!dfs(graph,visited,v))
                 return false;
-            if(visited[v]==0){
-                if(!dfs(graph,visited,v))
-                    return false;
-            }
         }
-        visited[node] = 2;
+        visited[node] = 1; //fully explored
         return true;
     }
 };
