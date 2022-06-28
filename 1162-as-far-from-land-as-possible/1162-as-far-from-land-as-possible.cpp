@@ -1,37 +1,47 @@
 class Solution {
 public:
+    vector<int> offset = {0,1,0,-1,0};
     int maxDistance(vector<vector<int>>& grid) {
-        int rows = grid.size();
+        int n = grid.size();
         
-        //First pass: check for left and top
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < rows; j++) {
-                if (grid[i][j] == 1)
-                    continue;
-                grid[i][j] = 201;
-                if (i > 0)
-                    grid[i][j] = min(grid[i][j], grid[i - 1][j] + 1);
-                if (j > 0)
-                    grid[i][j] = min(grid[i][j], grid[i][j - 1] + 1);
+        queue<pair<int,int>> q;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]){
+                    q.push({i,j}); //row , col
+                }
+                    
             }
         }
-
-        int finalres = 0;
-        //Second pass: check for bottom and right
-        for (int i = rows - 1; i >= 0; i--) {
-            for (int j = rows - 1; j >= 0; j--) {
-                if(grid[i][j] == 1)
-                    continue;
-                if (i < rows - 1)
-                    grid[i][j] = min(grid[i][j], grid[i + 1][j] + 1);
-                if (j < rows - 1)
-                    grid[i][j] = min(grid[i][j], grid[i][j + 1] + 1);
+        
+        if(q.size() == n*n)
+            return -1;
+        
+        int dist = 0;
+        while(!q.empty()){
+            int size = q.size();
+            dist++;
+            while(size){
+                auto curr = q.front();
+                q.pop();
+                int row = curr.first;
+                int col = curr.second;
+            
+                for(int k=0;k<4;k++){
+                    int newrow = row + offset[k];
+                    int newcol = col + offset[k+1];
                 
-                finalres = max(finalres,grid[i][j]);
+                    if(newrow>=0 && newrow<n && newcol>=0 && newcol<n){
+                        if(grid[newrow][newcol]==0){
+                            grid[newrow][newcol] = 1;
+                            q.push({newrow,newcol});
+                        }
+                    }
+                }
+                size--;
             }
         }
         
-        return finalres==201 ? -1 : finalres-1;
-        
+        return dist-1;
     }
 };
