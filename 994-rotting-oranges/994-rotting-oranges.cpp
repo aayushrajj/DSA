@@ -23,6 +23,8 @@ public:
         
         if(empty==m*n)
             return 0;
+        if(fresh==m*n)
+            return -1;
         
         int dist =0;
         while(!q.empty()){
