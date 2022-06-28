@@ -1,42 +1,35 @@
 class Solution {
 public:
-    vector<int> offset = {0,1,0,-1,0};
-    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        int m = mat.size();
-        int n = mat[0].size();
-        
-        vector<vector<int>> visited(m,vector<int>(n,INT_MAX));
-        
-        queue<pair<int,int>> q;
-        
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(mat[i][j]==0){
-                    q.push({i,j}); // row , col
-                    visited[i][j] = 0;
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+        int rows = matrix.size();
+        if (rows == 0) 
+            return matrix;
+        int cols = matrix[0].size();
+        vector<vector<int>> dist(rows, vector<int> (cols, INT_MAX - 100000));
+
+        //First pass: check for left and top
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j] == 0) {
+                    dist[i][j] = 0;
+                } else {
+                    if (i > 0)
+                        dist[i][j] = min(dist[i][j], dist[i - 1][j] + 1);
+                    if (j > 0)
+                        dist[i][j] = min(dist[i][j], dist[i][j - 1] + 1);
                 }
             }
         }
-        while(!q.empty()){
-            auto curr = q.front();
-            q.pop();
-            int row = curr.first;
-            int col = curr.second;
-            for(int k=0;k<4;k++){
-                int nextrow = row + offset[k];
-                int nextcol = col + offset[k+1];
-                
-                if(nextrow>=0 && nextrow<m && nextcol>=0 && nextcol<n){
-                    if(mat[nextrow][nextcol]){
-                        if(visited[nextrow][nextcol]>visited[row][col]+1){
-                            visited[nextrow][nextcol] = visited[row][col]+1;
-                            q.push({nextrow,nextcol});
-                        }
-                    }
-                }
+
+        //Second pass: check for bottom and right
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = cols - 1; j >= 0; j--) {
+                if (i < rows - 1)
+                    dist[i][j] = min(dist[i][j], dist[i + 1][j] + 1);
+                if (j < cols - 1)
+                    dist[i][j] = min(dist[i][j], dist[i][j + 1] + 1);
             }
         }
-        
-        return visited;
+        return dist;
     }
 };
