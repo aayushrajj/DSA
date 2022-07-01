@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // BFS best approach
     bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
         vector<int> graph[n+1];
         
@@ -23,7 +24,7 @@ public:
                 q.pop();
                 for(auto &v : graph[node]){
                     if(color[v]==0){
-                        color[v] = 3-color[node];
+                        color[v] = 3-color[node]; // m=2 , so either 3-1=2 or 3-2=1
                         q.push(v);
                     }
                     else if(color[v]==color[node])
