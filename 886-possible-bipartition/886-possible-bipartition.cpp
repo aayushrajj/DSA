@@ -1,6 +1,6 @@
 class Solution {
 public:
-    // BFS best approach
+    // DFS
     bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
         vector<int> graph[n+1];
         
@@ -10,29 +10,30 @@ public:
         }
         
         vector<int> color(n+1,0);
+        vector<int> visited(n+1,0);
         
         for(int i=1;i<=n;i++){
-            if(color[i]!=0)
-                continue;
-            
-            color[i] = 1;
-            queue<int> q;
-            q.push(i);
-            
-            while(!q.empty()){
-                int node = q.front();
-                q.pop();
-                for(auto &v : graph[node]){
-                    if(color[v]==0){
-                        color[v] = 3-color[node]; // m=2 , so either 3-1=2 or 3-2=1
-                        q.push(v);
-                    }
-                    else if(color[v]==color[node])
-                        return false;
-                }
+            if(color[i]==0){
+                color[i] = 1;
+                if(!dfs(graph,visited,color,i))
+                    return false;
             }
         }
         
+        return true;
+    }
+    
+    bool dfs(vector<int> graph[],vector<int> &visited,vector<int> &color,int node){
+        visited[node] = 1;
+        for(auto &v : graph[node]){
+            if(!visited[v]){
+                color[v] = 3-color[node];
+                if(!dfs(graph,visited,color,v))
+                    return false;
+            }
+            else if(color[v]==color[node])
+                return false;
+        }   
         return true;
     }
 };
