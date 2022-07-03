@@ -3,7 +3,7 @@ private:
     vector<int> parent;
     vector<int> ranks;
 public:
-    int groupCount;
+    int groupCount; // stores no. of unique groups
     UnionFind(int n){
         groupCount = n;
         parent.resize(n);
@@ -59,12 +59,12 @@ public:
         int nextIdx =0;
         
         for(auto &pair : mail2accountIdx){
-            auto email = pair.first;
+            auto &email = pair.first;
             auto groupId = uf.find(pair.second);
             auto it = groupIdx2Idx.find(groupId);
             if(it==groupIdx2Idx.end()){
                 groupIdx2Idx[groupId] = nextIdx;
-                auto owner = accounts[groupId][0];
+                auto &owner = accounts[groupId][0];
                 mergedAccounts[nextIdx].push_back(owner);
                 mergedAccounts[nextIdx].push_back(email);
                 nextIdx++;
