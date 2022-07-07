@@ -1,23 +1,23 @@
 class Solution {
 public:
-    unordered_map<string, vector<pair<string, double>>> adjList;
-    unordered_map<string, bool> visited;
+    unordered_map<string,vector<pair<string,double>>> adjList;
+    unordered_map<string,bool> visited;
     double queryAns;
-    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values,
-    vector<vector<string>>& queries) {
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
         int n = equations.size();
         int m = queries.size();
         vector<double> result(m);
+        
         for(int i=0;i<n;i++){
-            adjList[equations[i][0]].push_back({equations[i][1] , values[i]});
-            adjList[equations[i][1]].push_back({equations[i][0] , 1/values[i]});
-            visited[equations[i][0]] = false;
-            visited[equations[i][1]] = false;
+            auto firstVar = equations[i][0];
+            auto secVar = equations[i][1];
+            adjList[firstVar].push_back( { secVar , values[i] } );
+            adjList[secVar].push_back( { firstVar , 1/values[i] } );
         }
         
         for(int i=0;i<m;i++){
             queryAns = 1;
-            bool pathFound = dfs(queries[i][0] , queries[i][1] , 1);
+            bool pathFound = dfs( queries[i][0] , queries[i][1] , 1);
             if(pathFound)
                 result[i] = queryAns;
             else
@@ -27,7 +27,7 @@ public:
         return result;
     }
     
-    bool dfs(string startNode, string endNode, double runningProduct){
+    bool dfs(string startNode , string endNode , double runningProduct){
         if(startNode==endNode && adjList.find(startNode)!=adjList.end()){
             queryAns = runningProduct;
             return true;
@@ -35,14 +35,14 @@ public:
         
         bool tempAns = false;
         visited[startNode] = true;
-        
-        for(int i = 0; i < adjList[startNode].size(); i++){
-            if( !visited[adjList[startNode][i].first] ){
-                tempAns = dfs(adjList[startNode][i].first, endNode,
-                              runningProduct*adjList[startNode][i].second);
+        for(int i=0; i < adjList[startNode].size(); i++){
+            auto denominator = adjList[startNode][i].first;
+            auto prod = adjList[startNode][i].second;
+            if(!visited[denominator]){
+                tempAns = dfs(denominator , endNode , runningProduct*prod);
                 if(tempAns)
                     break;
-            }
+            }    
         }
         
         visited[startNode] = false;
