@@ -1,56 +1,44 @@
 class Solution {
 public:
-    vector<int> cityCount;
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<pair<int,int>>> adj(n);
-
+        int INF = (int) 1e6; // INF = n * maxWeight = 100 * 10^4 = 10^6
+        vector<vector<int>> dist(n,vector<int>(n,INF));
         
-        for(int i=0;i<edges.size();i++){
-            adj[edges[i][0]].push_back({edges[i][1] , edges[i][2]});
-            adj[edges[i][1]].push_back({edges[i][0] , edges[i][2]});
-        }
-        
+        //initialize
         for(int i=0;i<n;i++){
-            dijsktra(adj,distanceThreshold,n,i);
+            dist[i][i] = 0;
         }
         
-        int minCity = INT_MAX;
-        int ansCity = 0;
-        for(int i=0;i<cityCount.size();i++){
-            if(cityCount[i] <= minCity){
-                minCity = cityCount[i];
-                ansCity = i;
-            }
+        for(auto &edge : edges){
+            int u = edge[0];
+            int v = edge[1];
+            dist[u][v] = edge[2];
+            dist[v][u] = edge[2];
         }
-        return ansCity;
-    }
-    
-    void dijsktra(vector<vector<pair<int,int>>> &adj , int distanceThreshold , int n , int src){
-        vector<int> distance(n,INT_MAX);
-        distance[src] = 0;
         
-        priority_queue<pair<int,int> , vector<pair<int,int>> , greater<pair<int,int>> > pq;
-        pq.push({0,src});
-        
-        while(!pq.empty()){
-            int node = pq.top().second;
-            int dist = pq.top().first;
-            pq.pop();
-            
-            for(auto it : adj[node]){
-                if(distance[it.first] > dist + it.second){
-                    distance[it.first] = dist + it.second;
-                    pq.push({distance[it.first] , it.first});
+        //choice diagram
+        for(int k=0;k<n;k++){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    dist[i][j] = min(dist[i][j] , dist[i][k]+dist[k][j]);
                 }
             }
         }
         
-        int count=0;
+        int ansCity=0;
+        int minCity=INT_MAX;
         for(int i=0;i<n;i++){
-            if(i!=src && distance[i] <= distanceThreshold)
-                count++;
+            int current=0;
+            for(int j=0;j<n;j++){
+                if(i!=j && dist[i][j]<=distanceThreshold)
+                    current++;
+            }
+            if(current<=minCity){
+                minCity = current;
+                ansCity = i;
+            }
         }
         
-        cityCount.push_back(count);
+        return ansCity;
     }
 };
