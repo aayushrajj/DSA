@@ -36,10 +36,7 @@ public:
         }
         
         Node* original = head;
-        Node* copy = new Node(NULL);
-        if(head->next){
-            copy = head->next;
-        }  
+        Node* copy = head->next;  
         Node* result = copy;
         while(original){
             original->next = original->next->next;
