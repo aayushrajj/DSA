@@ -16,23 +16,18 @@ public:
             return {};
         
         vector<int> view;
-        queue<TreeNode*> q;
-        q.push(root);
-        
-        while(!q.empty()){
-            int n = q.size();
-            for(int i=0;i<n;i++){
-                TreeNode* curr = q.front();
-                q.pop();
-                if(i==n-1)
-                    view.push_back(curr->val);
-                if(curr->left)
-                    q.push(curr->left);
-                if(curr->right)
-                    q.push(curr->right);
-            }
-        }
-        
+        dfs(root,view,0);
         return view;
+    }
+    
+    void dfs(TreeNode* root,vector<int> &view,int level){
+        if(root==NULL)
+            return;
+        if(level==view.size())
+            view.push_back(root->val);
+        if(root->right)
+            dfs(root->right,view,level+1);
+        if(root->left)
+            dfs(root->left,view,level+1);
     }
 };
