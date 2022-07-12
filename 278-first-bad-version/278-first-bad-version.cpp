@@ -11,7 +11,7 @@ public:
             int mid = left + (right-left)/2;
             if(!isBadVersion(mid))
                 left = mid+1;
-            else if(isBadVersion(mid))
+            else
                 right = mid;
         }
         return left;
