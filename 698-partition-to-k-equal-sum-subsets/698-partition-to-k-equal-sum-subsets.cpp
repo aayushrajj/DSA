@@ -6,7 +6,7 @@ public:
         int total = accumulate(nums.begin(),nums.end(),0);
         if(total%k!=0) return false;
         int sum = total/k;
-        sort(begin(nums),end(nums),greater<int>());
+        // sort(begin(nums),end(nums),greater<int>());
         vector<bool> visited(n);
         int currSum=0;
         return backtrack(nums,visited,currSum,sum,k,0);
