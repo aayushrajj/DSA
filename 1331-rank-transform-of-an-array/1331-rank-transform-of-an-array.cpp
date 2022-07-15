@@ -5,20 +5,15 @@ public:
         vector<int> copy = arr;
         sort(copy.begin(),copy.end());
         
-        vector<int> rank(n);
-        unordered_map<int,int> map;
+        unordered_map<int,int> rankMap;
         for(int i=0;i<n;i++){
-            if(i==0)
-                rank[i] = 1 , map[copy[i]] = rank[i];
-            else if(i>0 && copy[i]==copy[i-1])
-                rank[i] = rank[i-1] , map[copy[i]] = rank[i];
-            else
-                rank[i] = rank[i-1]+1 , map[copy[i]] = rank[i];
+            rankMap.emplace( copy[i] , rankMap.size() + 1 );
+            
         }
         
         vector<int> res(n);
         for(int i=0;i<n;i++){
-            res[i] = map[arr[i]];
+            res[i] = rankMap[arr[i]];
         }
         
         return res;
