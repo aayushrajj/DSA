@@ -4,13 +4,13 @@ public:
         int n = position.size();
         sort(begin(position),end(position));
         int low=0 , high=position[n-1]-position[0];
-        int best=0;
+        int bestGap=0;
         while(low<=high){
-            int mid = low + (high-low)/2;
+            int gap = low + (high-low)/2;
             int count=1;
             int prev = position[0];
             for(int i=1;i<n;i++){
-                if(position[i]-prev>=mid){
+                if(position[i]-prev>=gap){
                     count++;
                     prev = position[i];
                     if(count==m)
@@ -19,12 +19,12 @@ public:
             }
             
             if(count==m){
-                best = mid;
-                low = mid+1;
+                bestGap = gap;
+                low = gap+1;
             }else
-                high = mid-1;
+                high = gap-1;
         }
         
-        return best;
+        return bestGap;
     }
 };
