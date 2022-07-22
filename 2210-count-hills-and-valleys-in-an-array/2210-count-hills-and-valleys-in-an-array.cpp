@@ -2,7 +2,6 @@ class Solution {
 public:
     int countHillValley(vector<int>& nums) {
         int n = nums.size();
-        if(n==1) return 0;
         int last = nums[0];
         int total=0;
         
