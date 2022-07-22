@@ -10,67 +10,34 @@
 
 class Solution {
 public:
-    int n;
     int findInMountainArray(int target, MountainArray &mountainArr) {
-        n = mountainArr.length();
-        int low =0 , high = n-1;
-        int peak = findPeak(mountainArr,low,high);
-        
-        low = 0 , high = peak-1;
-        while(low<=high){
-            int mid = low + (high-low)/2;
+        // binary search on the left side of mountain
+        int lo = 0;
+        int hi = mountainArr.length() - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
             int midVal = mountainArr.get(mid);
-            if(midVal==target)
-                return mid;
-            else if(midVal>target)
-                high = mid-1;
+            if (midVal < mountainArr.get(mid + 1) && midVal < target)
+                lo = mid + 1;
             else
-                low = mid+1;
+                hi = mid;
         }
+        if (mountainArr.get(lo) == target)
+            return lo;
         
-        low = peak , high = n-1;
-        while(low<=high){
-            int mid = low + (high-low)/2;
+        // binary search on the right side of mountain
+        hi = mountainArr.length() - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2 + 1;
             int midVal = mountainArr.get(mid);
-            if(midVal==target)
-                return mid;
-            else if(midVal>target)
-                low = mid+1;
+            if (midVal < mountainArr.get(mid - 1) && midVal < target)
+                hi = mid - 1;
             else
-                high = mid-1;
+                lo = mid;
         }
-        
-        return -1;
-    }
-    
-    int findPeak(MountainArray &mountainArr,int &low,int &high){
-        while(low<=high){
-            int mid = low + (high-low)/2;
-            int midVal = mountainArr.get(mid);
-            if(mid>0 && mid<n-1){
-                if(midVal > mountainArr.get(mid+1) &&
-                   midVal > mountainArr.get(mid-1)){
-                    return mid;
-                }
-                else if(mountainArr.get(mid-1) > midVal)
-                    high = mid-1;
-                else
-                    low = mid+1;
-            }
-            else if(mid==0){
-                if(midVal > mountainArr.get(mid+1))
-                    return mid;
-                else
-                    return mid+1;
-            }
-            else if(mid==n-1){
-                if(midVal > mountainArr.get(mid-1))
-                    return mid;
-                else
-                    return mid-1;
-            }
-        }
-        
-        return -1;
+        if (mountainArr.get(hi) == target)
+            return hi;
+        else
+            return -1;  
     }
 };
