@@ -9,7 +9,7 @@ public:
             if(mid>0 && mid<n-1){
                 if(arr[mid]>arr[mid-1] && arr[mid]>arr[mid+1])
                     return mid;
-                else if(arr[mid-1]>=arr[mid])
+                else if(arr[mid-1]>arr[mid])
                     high = mid-1;
                 else
                     low = mid+1;
