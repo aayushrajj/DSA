@@ -1,24 +1,26 @@
 class SmallestInfiniteSet {
 public:
-    vector<int> nums = vector<int>(1001,1);
+    int curr;
+    set<int> map;
     SmallestInfiniteSet() {
-        
+        curr = 1;
     }
     
     int popSmallest() {
-        int res=0;
-        for(int i=1;i<1001;i++){
-            if(nums[i]==1){
-                res = i;
-                nums[i] = 0;
-                break;
-            }          
+        if(map.size()){
+            int res = *map.begin();
+            map.erase(res);
+            return res;
         }
-        return res;
+        else{
+            curr += 1;
+            return curr-1;
+        }
     }
     
     void addBack(int num) {
-        nums[num] = 1;
+        if(curr>num)
+            map.insert(num);
     }
 };
 
