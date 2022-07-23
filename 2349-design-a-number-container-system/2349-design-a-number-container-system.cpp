@@ -1,22 +1,21 @@
 class NumberContainers {
+    map<int, int> m;
 public:
-    unordered_map<int,set<int>> map;
-    unordered_map<int,int> idxStore;
     NumberContainers() {
         
     }
     
     void change(int index, int number) {
-        auto it = idxStore.find(index);
-        if(it != idxStore.end())
-            map[it->second].erase(index);
-        idxStore[index] = number;
-        map[number].insert(index); 
+        m[index] = number;
     }
     
     int find(int number) {
-        auto it = map.find(number);
-        return it==map.end() || it->second.empty() ? -1 : *(it->second).begin();
+        for(auto it:m){
+            if(it.second==number){
+                return it.first;
+            }
+        }
+        return -1;
     }
 };
 
