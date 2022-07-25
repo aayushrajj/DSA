@@ -28,16 +28,17 @@ public:
         
         reverse(right.begin(),right.end());
         
-        int ans = n;
+        int result = 0;
         for (int i=0;i<n;i++)
         {
             if (left[i] != 1 && right[i] != 1){
-                int x = n - (left[i]+right[i]-1);
-                ans = min(ans, x);
+                // int x = n - (left[i]+right[i]-1);
+                // ans = min(ans, x);
+                result = max(result, left[i] + right[i]-1);
             }
-                // result = max(result, left[i] +right[i]); 
+                 
         }
-        // return n - result -1;
-        return ans;
+        return n - result;
+        // return ans;
     }
 };
