@@ -1,67 +1,43 @@
 class Solution {
 public:
     int minimumMountainRemovals(vector<int>& nums) {
-//         int n = nums.size();
+        int n = nums.size();
+        vector<int> left(n,1);
+        vector<int> right(n,1);
         
-//         vector<int> dp;
-//         dp.push_back(nums[0]);
-//         for(int i=1;i<n;i++){
-//             if(nums[i]>dp.back())
-//                 dp.push_back(nums[i]);
-//             else{
-//                 int k = lower_bound(dp.begin(),dp.end(),nums[i])-dp.begin();
-//                 dp[k] = nums[i];
-//             }
-//         }
-//         int len1 = dp.size();
-        
-//         dp.clear();
-//         reverse(nums.begin(),nums.end());
-//         dp.push_back(nums[0]);
-//         for(int i=1;i<n;i++){
-//             if(nums[i]>dp.back())
-//                 dp.push_back(nums[i]);
-//             else{
-//                 int k = lower_bound(dp.begin(),dp.end(),nums[i])-dp.begin();
-//                 dp[k] = nums[i];
-//             }
-//         }
-//         int len2 = dp.size();
-        
-//         int mountainSub = len1+len2-1;
-        
-//         return n-mountainSub;
-        
-            int n=nums.size();
-       vector<int> left(n);
-        vector<int> right(n);
-        int result=0;
-        for (int i=1;i<n;i++)
-        {
-           for (int j=0;j<i;j++)
-           {
-               if (nums[i]>nums[j])
-               left[i]=max(left[i], left[j]+1);
-           }
-                                     
+        vector<int> dp;
+        for(int i=0;i<n;i++){
+            auto it = lower_bound(dp.begin(),dp.end(),nums[i]);
+            if(it != dp.end())
+                *it = nums[i];
+            else
+                dp.push_back(nums[i]);
+            left[i] = dp.size();
         }
-            
-        for (int i=n-2; i>-1;i--)
-        {
-           for (int j=n-1;j>i;j--)
-           {
-             
-                if (nums[i]>nums[j])
-                right[i]=max(right[i],right[j]+1);
-               
-           }
-         
+        
+        dp.clear();
+        reverse(nums.begin(),nums.end());
+        for(int i=0;i<n;i++){
+            auto it = lower_bound(dp.begin(),dp.end(),nums[i]);
+            if(it != dp.end())
+                *it = nums[i];
+            else
+                dp.push_back(nums[i]);
+            right[i] = dp.size();
         }
-        for (int i=1;i<n;i++)
+        
+        reverse(right.begin(),right.end());
+        
+        int ans = n;
+        for (int i=0;i<n;i++)
         {
-            if (left[i] != 0 && right[i] != 0)
-                result = max(result, left[i] +right[i]); 
+            if (left[i] != 1 && right[i] != 1){
+                int x = n - (left[i]+right[i]-1);
+                ans = min(ans, x);
+            }
+                // result = max(result, left[i] +right[i]); 
         }
-        return n - result -1;
+        // return n - result -1;
+        return ans;
     }
 };
