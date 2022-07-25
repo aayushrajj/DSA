@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // Cantor's Diagonalization
     string findDifferentBinaryString(vector<string>& nums) {
         string res = "";
         for(int i=0;i<nums.size();i++){
