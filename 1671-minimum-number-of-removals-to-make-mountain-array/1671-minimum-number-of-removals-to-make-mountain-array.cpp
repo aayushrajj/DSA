@@ -16,8 +16,7 @@ public:
         }
         
         dp.clear();
-        reverse(nums.begin(),nums.end());
-        for(int i=0;i<n;i++){
+        for(int i=n-1;i>=0;i--){
             auto it = lower_bound(dp.begin(),dp.end(),nums[i]);
             if(it != dp.end())
                 *it = nums[i];
@@ -26,7 +25,6 @@ public:
             right[i] = dp.size();
         }
         
-        reverse(right.begin(),right.end());
         
         int result = 0;
         for (int i=0;i<n;i++)
