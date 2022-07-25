@@ -1,32 +1,11 @@
 class Solution {
 public:
-    string res = "";
     string findDifferentBinaryString(vector<string>& nums) {
-        int n = nums.size();
-        unordered_set<string> map;
-        for(auto &s : nums)
-            map.insert(s);
-        
-        string curr = "";
-        backtrack(map,curr,n);
-        
-        return res;
-    }
-    
-    void backtrack(unordered_set<string> &map,string &curr,int n){
-        if(curr.length()==n){
-            if(map.find(curr)==map.end() && res == "")
-                res = curr;
-            return;    
+        string res = "";
+        for(int i=0;i<nums.size();i++){
+            res += nums[i][i]=='0' ? '1' : '0';
         }
         
-        curr += '1';
-        backtrack(map,curr,n);
-        curr.pop_back();
-        curr += '0' ;
-        backtrack(map,curr,n);
-        curr.pop_back();
-        
-        return;
+        return res;
     }
 };
