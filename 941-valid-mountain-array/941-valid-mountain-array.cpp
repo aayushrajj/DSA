@@ -4,16 +4,23 @@ public:
         int n = nums.size();
         if(n<3) return false;
         
-        int i=0;
-        while(i+1<n && nums[i+1]>nums[i])
-            i++;
+        bool up = false;
+        bool down = false;
         
-        if(i==0 || i==n-1)
-            return false;
+        for(int i=1;i<n;i++){
+            if(nums[i]==nums[i-1])
+                return false;
+            
+            if(nums[i] > nums[i-1]){
+                if(down)
+                    return false;
+                up = true;
+            }
+            
+            if(nums[i-1] > nums[i])
+                down = true;
+        }
         
-        while(i+1<n && nums[i]>nums[i+1])
-            i++;
-        
-        return i==n-1;
+        return up && down;
     }
 };
