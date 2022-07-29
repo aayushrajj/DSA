@@ -11,24 +11,19 @@
  */
 class Solution {
 public:
-    vector<int> res;
+    TreeNode* prev = NULL;
     void flatten(TreeNode* root) {
-        if(root==NULL) return;
-        traverse(root);
-        root->left = NULL;
-        root->right = NULL;
-        for(int i=1;i<res.size();i++){
-            root->right = new TreeNode(res[i]);
-            root = root->right;
-        }
+        helper(root);
     }
     
-    void traverse(TreeNode* root){
+    void helper(TreeNode* root){
         if(root==NULL)
             return;
-        res.push_back(root->val);
-        traverse(root->left);
-        traverse(root->right);
+        helper(root->right);
+        helper(root->left);
+        root->right = prev;
+        root->left = NULL;
+        prev = root;
         return;
     }
 };
