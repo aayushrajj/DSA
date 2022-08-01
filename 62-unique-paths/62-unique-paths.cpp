@@ -1,14 +1,19 @@
 class Solution {
 public:
+    int dp[101][101];
     int uniquePaths(int m, int n) {
-        vector<vector<int>> dp(m,vector<int>(n,1));
+        memset(dp,-1,sizeof(dp));
+        return solve(m,n,0,0);
+    }
+    
+    int solve(int m,int n,int i,int j){
+        if(i==m-1 || j==n-1)
+            return 1;
         
-        for(int i=1;i<m;i++){
-            for(int j=1;j<n;j++){
-                dp[i][j] = dp[i][j-1] + dp[i-1][j];
-            }
-        }
+        if(dp[i][j]!=-1)
+            return dp[i][j];
         
-        return dp[m-1][n-1];
+        return dp[i][j] = solve(m,n,i,j+1) + solve(m,n,i+1,j);
+
     }
 };
