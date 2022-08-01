@@ -24,17 +24,13 @@ public:
         int left = 1 , right = f;
         while(left<=right){
             int mid = left + (right-left)/2;
-            int down = 0 , up = 0;
-            if(dp[e-1][mid-1]!=-1)
-                down = dp[e-1][mid-1];
-            else
-                down = solve(e-1,mid-1);
-            if(dp[e][f-mid]!=-1)
-                up = dp[e][f-mid];
-            else
-                up = solve(e,f-mid);
+            
+            int down = solve(e-1,mid-1);
+            int up = solve(e,f-mid);
+            
             int temp = 1 + max( down , up );
             minans = min(minans,temp);
+            
             if(down<up)
                 left = mid+1;
             else
