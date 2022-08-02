@@ -11,23 +11,22 @@
  */
 class Solution {
 public:
-    
-    //tech dose video best explaination
-    int max1=0; int max2=0; int result=INT_MIN;
+    int sum = INT_MIN;
     int maxPathSum(TreeNode* root) {
-        int temp = postOrder(root);
-        return result;
+        int temp = solve(root);
+        return sum;
     }
     
-    int postOrder(TreeNode *root){
+    int solve(TreeNode* root){
         if(root==NULL)
             return 0;
-        int left = postOrder(root->left);
-        int right = postOrder(root->right);
         
-        max1 = max( root->val , max(left,right) + root->val );
-        max2 = max( max1 , root->val + left + right);
-        result = max( max2 , result);
+        int left = solve(root->left);
+        int right = solve(root->right);
+        
+        int max1 = max(root->val , root->val + max(left,right) );
+        int max2 = max(max1 , root->val + left + right);
+        sum = max(sum,max2);
         
         return max1;
     }
