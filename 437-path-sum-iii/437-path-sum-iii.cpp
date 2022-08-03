@@ -11,33 +11,53 @@
  */
 class Solution {
 public:
-    int count = 0;
+    int count=0;
+    long long target=0;
     int pathSum(TreeNode* root, int targetSum) {
-        if(root==NULL)
-            return 0;
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            TreeNode* node = q.front();
-            q.pop();
-            solve(node,targetSum);
-            if(node->left) q.push(node->left);
-            if(node->right) q.push(node->right);
-        }
+        unordered_map<long long,long long> map;
+        map[0]++;
+        target = targetSum;
+        helper(root,map,0);
         
         return count;
     }
     
-    void solve(TreeNode* root,long long sum){
+    void helper(TreeNode* root,unordered_map<long long,long long> &map,long long sum){
         if(root==NULL)
             return;
+        sum += root->val;
+        if(map.find(sum-target)!=map.end())
+            count += map[sum-target];
+        map[sum]++;
         
-        sum -= root->val;
-        if(sum==0) count++;
-        solve(root->left,sum);
-        solve(root->right,sum);
-        sum +=  root->val;
+        helper(root->left,map,sum);
+        helper(root->right,map,sum);
         
-        return;
+        map[sum]--;
     }
 };
+
+// class Solution {
+// public:
+//     int pathSum(TreeNode* root, int sum) {
+//         unordered_map<long long,long long> m;
+//         m[0]++;
+        
+//         int total = 0;
+//         helper(root, 0, sum, total, m);
+//         return total;
+//     }
+    
+//     void helper(TreeNode *p, long long cur, long long sum, int &total, unordered_map<long long,long long> &m) {
+//         if (!p) return;
+        
+//         cur += p->val;
+//         if (m.find(cur - sum) != m.end()) total += m[cur - sum];
+//         m[cur]++;
+        
+//         helper(p->left, cur, sum, total, m);
+//         helper(p->right, cur, sum, total, m);
+        
+//         m[cur]--;
+//     }
+// };
