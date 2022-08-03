@@ -11,17 +11,16 @@
  */
 class Solution {
 public:
-    int count = 0 , target = 0;
+    int count = 0;
     int pathSum(TreeNode* root, int targetSum) {
         if(root==NULL)
             return 0;
-        target = targetSum;
         queue<TreeNode*> q;
         q.push(root);
         while(!q.empty()){
             TreeNode* node = q.front();
             q.pop();
-            solve(node,0);
+            solve(node,targetSum);
             if(node->left) q.push(node->left);
             if(node->right) q.push(node->right);
         }
@@ -33,11 +32,11 @@ public:
         if(root==NULL)
             return;
         
-        sum += root->val;
-        if(sum==target) count++;
+        sum -= root->val;
+        if(sum==0) count++;
         solve(root->left,sum);
         solve(root->right,sum);
-        sum -=  root->val;
+        sum +=  root->val;
         
         return;
     }
