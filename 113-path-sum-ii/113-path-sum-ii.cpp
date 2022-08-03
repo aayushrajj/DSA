@@ -23,11 +23,9 @@ public:
         
         temp.push_back(root->val);
         sum -= root->val;
-        if(root->left==NULL && root->right==NULL && sum==0){
+        
+        if(root->left==NULL && root->right==NULL && sum==0)
             res.push_back(temp);
-            temp.pop_back();
-            return;
-        }
         
         solve(root->left,temp,sum);
         solve(root->right,temp,sum);
