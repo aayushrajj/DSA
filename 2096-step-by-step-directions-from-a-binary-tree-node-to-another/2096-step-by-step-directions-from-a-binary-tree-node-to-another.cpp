@@ -12,41 +12,39 @@
 class Solution {
 public:
     string getDirections(TreeNode* root, int startValue, int destValue) {
-        
         TreeNode* lca = helper(root,startValue,destValue);
         
-        string lca_to_start = "" , lca_to_dest = "";
+        string lca_to_start = "";
+        string lca_to_dest = "";
         
         traverse(lca,startValue,lca_to_start);
         traverse(lca,destValue,lca_to_dest);
         
-        for(auto &c : lca_to_start) c = 'U';
+        for(auto &c : lca_to_start)
+            c = 'U';
         
         return lca_to_start + lca_to_dest;
-        
     }
     
-    bool traverse(TreeNode* root,int val,string &path){
-        if(root==NULL)
-            return false;
-        
-        if(root->val==val)
-            return true;
+    bool traverse(TreeNode* root,int p,string &path){
+        if(root==NULL) return false;
+        if(root->val==p) return true;
         
         path += 'L';
-        if(traverse(root->left,val,path)) return true;
+        if(traverse(root->left,p,path)) return true;
         path.pop_back();
         
         path += 'R';
-        if(traverse(root->right,val,path)) return true;
+        if(traverse(root->right,p,path)) return true;
         path.pop_back();
         
         return false;
     }
     
-    TreeNode* helper(TreeNode* root,int &p,int &q){
+    
+    TreeNode* helper(TreeNode* root,int p,int q){
         if(root==NULL)
-            return root;
+            return NULL;
         if(root->val==p || root->val==q)
             return root;
         
@@ -58,5 +56,4 @@ public:
         
         return left==NULL ? right : left;
     }
-    
 };
