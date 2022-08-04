@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    string res = "~";
+    string res = "~"; // this means intitialzed with infinity
     string smallestFromLeaf(TreeNode* root) {
         string temp = "";
         dfs(root,temp);
