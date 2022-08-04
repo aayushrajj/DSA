@@ -11,26 +11,22 @@
  */
 class Solution {
 public:
-    int total = 0;
     int sumNumbers(TreeNode* root) {
-        string temp = "";
-        dfs(root,temp);
-        return total;
-    }
-    
-    void dfs(TreeNode* root,string s){
-        if(root==NULL)
-            return;
-        s += to_string(root->val);
-        if(root->left==NULL && root->right==NULL){
-            int curr = stoi(s);
-            total += curr;
-            return;
+        stack<pair<TreeNode*,int>> st;
+        st.push({root,0});
+        int sum = 0;
+        while(!st.empty()){
+            auto [root,curr] = st.top();
+            st.pop();
+            
+            curr = curr*10 + root->val;
+            if(root->left==NULL && root->right==NULL)
+                sum += curr;
+            
+            if(root->left) st.push({root->left,curr});
+            if(root->right) st.push({root->right,curr});
         }
         
-        dfs(root->left,s);
-        dfs(root->right,s);
-        s.pop_back();
-        return;
+        return sum;
     }
 };
