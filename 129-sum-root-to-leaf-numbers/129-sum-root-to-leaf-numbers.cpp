@@ -11,17 +11,26 @@
  */
 class Solution {
 public:
+    int total = 0;
     int sumNumbers(TreeNode* root) {
-        return dfs(root,0);
+        string temp = "";
+        dfs(root,temp);
+        return total;
     }
     
-    int dfs(TreeNode* root,int curr){
-        if(root==NULL) return 0;
-         curr = curr*10 + root->val;
+    void dfs(TreeNode* root,string s){
+        if(root==NULL)
+            return;
+        s += to_string(root->val);
+        if(root->left==NULL && root->right==NULL){
+            int curr = stoi(s);
+            total += curr;
+            return;
+        }
         
-        if(root->left==NULL && root->right==NULL)
-            return curr;
-        
-        return dfs(root->left,curr) + dfs(root->right,curr);
+        dfs(root->left,s);
+        dfs(root->right,s);
+        s.pop_back();
+        return;
     }
 };
