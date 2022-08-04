@@ -20,10 +20,10 @@ public:
     bool backtrack(vector<vector<char>>& board, string word,int i,int j,int n){
         if(n==word.size()) return true;
         
-        // if(i>=m || j>=n || i<0 || j<0 || board[i][j]!=word[n])
-            // return false;
+        if(i>=board.size() || j>=board[i].size() || i<0 || j<0 || board[i][j]!=word[n])
+            return false;
         
-        if(i<0 || i>=m || j<0 || j>=board[i].size() || board[i][j]!=word[n]) return false;
+        // if(i<0 || i>=m || j<0 || j>=board[i].size() || board[i][j]!=word[n]) return false;
         
         board[i][j] = '0';
         
