@@ -12,7 +12,7 @@ public:
         }
         int len = copy.length();
         int i=0,j=len-1;
-        while(i<=j){
+        while(i<j){
             if(copy[i]!=copy[j])
                 return false;
             i++;
