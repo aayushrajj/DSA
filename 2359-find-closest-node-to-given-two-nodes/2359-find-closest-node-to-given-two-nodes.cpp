@@ -1,44 +1,52 @@
+typedef pair<int,int> t;
 class Solution {
 public:
-	int n;
-
-	vector<int> bfs(int node,vector<pair<int,int>>adj[]){
-	priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
-	vector<int>distance(n,INT_MAX);
-	distance[node]=0;
-	q.push({0,node});
-
-	while(!q.empty()){
-		int dist= q.top().first;
-		int prev = q.top().second;
-		q.pop();
-		for(auto x: adj[prev]){
-			int next = x.first;
-			int nextDistance = x.second;
-			if(distance[next]>dist+nextDistance){
-				distance[next] = dist+nextDistance;
-				q.push({distance[next],next});
-			}
-		}
-	}
-	return distance; 
-}
-
-	int closestMeetingNode(vector<int>& edges, int node1, int node2) {
-		n = edges.size();
-		vector<pair<int,int>>adj[n];
-		for(int i=0;i<n;i++) if(edges[i]>=0) adj[i].push_back({edges[i],1});
-		vector<int>dis1 = bfs(node1,adj);
-		vector<int>dis2 = bfs(node2,adj);
-		int res = -1,maxi = INT_MAX;
-		for(int i=0;i<n;i++){
-		  if(dis1[i]!=INT_MAX and dis2[i]!=INT_MAX){
-			  if(maxi>max(dis1[i],dis2[i])) {
-				  maxi = max(dis1[i],dis2[i]);
-				  res = i;
-			  }
-		  }  
-		}
-		return res;
-	}
+    int n;
+    int closestMeetingNode(vector<int>& edges, int node1, int node2) {
+        n = edges.size();
+        vector<pair<int,int>> adj[n];
+        
+        for(int i=0;i<n;i++){
+            if(edges[i]>=0)
+                adj[i].push_back({edges[i],1});
+        }
+        
+        vector<int> dist1 = bfs(adj,node1);
+        vector<int> dist2 = bfs(adj,node2);
+        
+        int res = -1;
+        int curr = INT_MAX;
+        for(int i=0;i<n;i++){
+            if(dist1[i]!=-1 && dist2[i]!=-1){
+                if( curr > max(dist1[i],dist2[i]) ){
+                    curr = max(dist1[i],dist2[i]);
+                    res = i;
+                }
+            }
+        }
+        
+        return res;
+    }
+    
+    vector<int> bfs(vector<pair<int,int>> adj[],int node){
+        priority_queue<t,vector<t>,greater<t>> pq;
+        vector<int> dist(n,INT_MAX);
+        dist[node] = 0;
+        pq.push({0,node}); // dist,node
+        
+        while(!pq.empty()){
+            auto currNode = pq.top().second;
+            auto currDist = pq.top().first;
+            pq.pop();
+            
+            for(auto [next,nextDist] : adj[currNode]){
+                if(dist[next] > nextDist+currDist){
+                    dist[next] = nextDist + currDist;
+                    pq.push({dist[next],next});
+                }
+            }
+        }
+        
+        return dist;
+    }
 };
