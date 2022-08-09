@@ -10,7 +10,7 @@ public:
         while(low<=high){
             int capacity = low + (high-low)/2;
             int daysCount = 1;
-            int loads=0;
+            int loads = 0;
             for(int i=0;i<n;i++){
                 loads += weights[i];
                 if(loads>capacity){
@@ -21,7 +21,7 @@ public:
             if(daysCount<=days){
                 best = capacity;
                 high = capacity-1;
-            } 
+            }
             else
                 low = capacity+1;
         }
