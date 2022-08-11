@@ -1,22 +1,22 @@
 class Solution {
 public:
     bool isHappy(int n) {
-        set<int> store;
-        int val;
-        while(1){
-            val =0;
-            while(n){
-                int index = n%10;
-                val += index*index;
-                n = n/10;
-            }
-            if(val==1)
-                return true;
-            else if(store.find(val)!=store.end())
-                return false;
-            store.insert(val);
-            n = val;
+        int slow = next(n);
+        int fast = next(next(n));
+        while(slow!=fast){
+            slow = next(slow);
+            fast = next(next(fast));
         }
-        return true;
+        return slow==1;
+    }
+    
+    int next(int n){
+        int res=0;
+        while(n){
+            int index = n%10;
+            res += index*index;
+            n = n/10;
+        }
+        return res;
     }
 };
