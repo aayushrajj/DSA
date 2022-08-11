@@ -1,9 +1,12 @@
 class Solution {
 public:
-    bool isUgly(int num) {
-        for (int i=2; i<6 && num; i++)
-            while (num % i == 0)
-                num /= i;
-        return num == 1;
+    bool isUgly(int n) {
+        if(n<=0) return false;
+        
+        while(n%2==0) n=n/2;
+        while(n%3==0) n=n/3;
+        while(n%5==0) n=n/5;
+        
+        return n==1;
     }
 };
