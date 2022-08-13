@@ -1,19 +1,34 @@
 class Solution {
 public:
-    int nthSuperUglyNumber(int n, vector<int>& primes) {
-        vector<int>nums(n);
-        vector<int>indices(primes.size()); // index of the prime number inside nums array
-        nums[0] = 1;
-		// first item is value of ugly number, second item is identity of the prime
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<>>pq;
-        for(int i=0; i<primes.size(); ++i)  pq.emplace(primes[i], i);
-        for(int i=1; i<n; ){
-            auto [val, id] = pq.top();
-            pq.pop();
-            if(val != nums[i-1])    nums[i++] = val; // avoid duplicate
-            if(INT_MAX/primes[id]>nums[indices[id]+1]) // prevent overflow
-                pq.emplace(nums[++indices[id]] * primes[id], id);
+    int nthSuperUglyNumber(int n, vector<int>& arr) {
+        unordered_map<int,int>mp;
+        for(int i=0;i<arr.size();i++)
+        {
+            mp[arr[i]]=1;
         }
-        return nums.back();
+        vector<long long int>dp(n+1,0);
+        dp[1]=1;
+        long long int temp=0;
+        int v;
+        for(int i=2;i<=n;i++)
+        {
+            temp=INT_MAX;
+            for(int j=0;j<arr.size();j++)
+            {
+                long long int count=mp[arr[j]];
+                if(temp>(dp[count]*arr[j]))
+                {
+                    temp=dp[count]*arr[j];
+                    v=arr[j];
+                }
+                else if(temp==(dp[count]*arr[j]))
+                {
+                    mp[arr[j]]++;
+                }
+            }
+            mp[v]++;
+            dp[i]=temp;
+        }
+        return dp[n];
     }
 };
