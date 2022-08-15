@@ -15,12 +15,12 @@ public:
     auto sum = 0;
     auto right = roman[s.front() - 'A'];
     for (int i = 1; i < s.size(); ++i) {
-        auto curr = right;
+        auto prev = right;
         right = roman[s[i] - 'A'];
-        if (right > curr) 
-            sum -= curr;
+        if (right > prev) 
+            sum -= prev;
         else 
-            sum += curr;
+            sum += prev;
     }
     
     return sum + right;
