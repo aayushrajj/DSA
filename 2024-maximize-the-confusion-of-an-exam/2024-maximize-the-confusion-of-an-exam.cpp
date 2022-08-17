@@ -1,15 +1,31 @@
 class Solution {
 public:
-    int maxConsecutiveAnswers(string answerKey, int k) {
-        int ans =0;
-        int maxCount =0;
-        vector<int> count(2);
-        for(int l=0,r=0;r<answerKey.size();++r){
-            maxCount = max(maxCount,++count[answerKey[r]=='T']);
-            while(maxCount+k < r-l+1)
-                --count[answerKey[l++]=='T'];
-            ans = max(ans,r-l+1);
+    int maxConsecutiveAnswers(string s, int k) {
+        int n = s.size();
+        int count=0,res=0,left=0;
+        for(int i=0;i<n;i++){
+            if(s[i]=='F')
+                count++;
+            while(count>k){
+                if(s[left]=='F')
+                    count--;
+                left++;
+            }
+            res = max(res,i-left+1);
         }
-        return ans;
+        
+        count=0,left=0;
+        for(int i=0;i<n;i++){
+            if(s[i]=='T')
+                count++;
+            while(count>k){
+                if(s[left]=='T')
+                    count--;
+                left++;
+            }
+            res = max(res,i-left+1);
+        }
+        
+        return res;
     }
 };
