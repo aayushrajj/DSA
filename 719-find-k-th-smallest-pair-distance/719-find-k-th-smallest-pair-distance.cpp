@@ -13,7 +13,7 @@ public:
                 low = mid+1;
         }
         
-        return low;
+        return high;
     }
     
     bool check(vector<int>& nums,int diff,int k){
