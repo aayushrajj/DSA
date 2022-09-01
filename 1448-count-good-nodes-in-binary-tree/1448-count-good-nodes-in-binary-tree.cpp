@@ -11,7 +11,6 @@
  */
 class Solution {
 public:
-    // TreeNode* prev;
     int count=0;
     int goodNodes(TreeNode* root) {
         TreeNode* prev = root;
