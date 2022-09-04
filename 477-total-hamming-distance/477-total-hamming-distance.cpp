@@ -6,10 +6,10 @@ public:
         for(int i=0;i<32;i++){
             int zeros=0,ones=0;
             for(int j=0;j<n;j++){
-                if(nums[j]%2==0)
-                    zeros++;
-                else if(nums[j]%2!=0)
+                if(nums[j]&1)
                     ones++;
+                else
+                    zeros++;
                 nums[j] >>= 1;
             }
             
