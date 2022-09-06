@@ -12,14 +12,16 @@
 class Solution {
 public:
     TreeNode* pruneTree(TreeNode* root) {
-       return check(root) ? root : NULL;
+        return check(root) ? root : NULL;
     }
     
     bool check(TreeNode* root){
         if(root==NULL)
             return false;
+        
         bool left = check(root->left);
         bool right = check(root->right);
+        
         if(!left)
             root->left = NULL;
         if(!right)
