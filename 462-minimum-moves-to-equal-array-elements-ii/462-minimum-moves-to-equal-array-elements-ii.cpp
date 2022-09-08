@@ -2,19 +2,15 @@ class Solution {
 public:
     #define ll long long
     int minMoves2(vector<int>& nums) {
-        ll n = nums.size();
-        sort(nums.begin(),nums.end());
-        
-        ll mid = n/2;
-        ll res = 0;
-        for(ll i=0;i<n;i++){
-            res += abs( nums[i] - nums[mid] );
+        ll n = nums.size(), steps = 0;
+        nth_element(nums.begin(), nums.begin()+(n/2), nums.end()); 
+        ll median = nums[n/2];
+        for(int i=0; i<n; i++){
+            steps += abs(nums[i] - median);
         }
-        
-        return res;
+        return steps;
     }
 };
-
 
 
  
