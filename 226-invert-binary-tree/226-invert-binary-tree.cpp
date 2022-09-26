@@ -12,16 +12,19 @@
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-        helper(root);
-        return root;
-    }
-    
-    void helper(TreeNode* root){
-        if(root==NULL)
-            return;
+        stack<TreeNode*> st;
+        st.push(root);
         
-        swap(root->left,root->right);
-        helper(root->left);
-        helper(root->right);
+        while(!st.empty()){
+            TreeNode* curr = st.top();
+            st.pop();
+            
+            if(!curr) continue;
+            st.push(curr->left);
+            st.push(curr->right);
+            swap(curr->left,curr->right);
+        }
+        
+        return root;
     }
 };
