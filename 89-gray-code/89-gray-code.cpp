@@ -10,11 +10,11 @@ public:
     }
     
     vector<string> generate(int n){
-        if(n==1){
+        if(n==1)
             return {"0","1"};
-        }
-        vector<string> ans;
+        
         vector<string> temp = generate(n-1);
+        vector<string> ans;
         for(int i=0;i<temp.size();i++){
             ans.push_back("0"+temp[i]);
         }
