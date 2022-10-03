@@ -1,35 +1,16 @@
 class Solution {
 public:
     int longestNiceSubarray(vector<int>& nums) {
-        int bits[31] = {0};
-        int l=0 , res=0;
+        int mask=0 , res =0;
+        int low = 0;
         
         for(int i=0;i<nums.size();i++){
-            bool flag = false;
-            for(int k=0;k<31;k++){
-                if(nums[i] & (1<<k))
-                    bits[k]++;
-                if(bits[k]>1)
-                    flag = true;
-            }
+            while( (mask & nums[i]) !=0)
+                mask ^= nums[low++];
             
-            if(!flag) res = max(res,i-l+1);
-            else{
-                while(l<=i){
-                    bool flag = false;
-                    for(int k=0;k<31;k++){
-                        if(nums[l] & (1<<k))
-                            bits[k]--;
-                    }
-                    l++;
-                    for(int k=0;k<31;k++){
-                        if(bits[k]>1)
-                            flag = true;
-                    }
-                    
-                    if(!flag) break;
-                }
-            }
+            mask |= nums[i];
+            
+            res = max(res , i-low+1);
         }
         
         return res;
