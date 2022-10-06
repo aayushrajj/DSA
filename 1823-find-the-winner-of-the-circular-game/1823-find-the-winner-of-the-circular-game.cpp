@@ -1,22 +1,13 @@
 class Solution {
 public:
     int findTheWinner(int n, int k) {
-        queue<int> q;
-        for(int i=1;i<=n;i++){
-            q.push(i);
-        }
+        return helper(n,k)+1;
+    }
+    
+    int helper(int n,int k){
+        if(n==1)
+            return 0;
         
-        while(q.size()!=1){
-            int x = k;
-            while(x>1){
-                int r = q.front();
-                q.pop();
-                q.push(r);
-                x--;
-            }
-            q.pop();
-        }
-        
-        return q.front();
+        return (helper(n-1,k) + k) % n;
     }
 };
