@@ -1,6 +1,6 @@
 class Solution {
 public:
-    typedef long long int;
+    typedef long long itt;
     long long minSumSquareDiff(vector<int>& nums1, vector<int>& nums2, int k1, int k2) {
         vector<int> diff(1e5+1,0);
         
@@ -29,7 +29,7 @@ public:
             }
         }
         
-        long long res =0;
+        itt res =0;
         
         for(int i=1;i<=1e5;i++){
             res += (long long)diff[i] * ((long long)i*i);
