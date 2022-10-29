@@ -18,6 +18,10 @@ public:
          root = new TrieNode();
     }
     
+    ~Trie(){
+        clear(root);
+    }
+    
     void insert(string s) {
         TrieNode* p = root;
         for(int i=0;i<s.length();i++){
@@ -45,6 +49,15 @@ private:
         }
         
         return p;
+    }
+    
+    void clear(TrieNode *root){
+        for(int i = 0; i < 26; i++){
+            if(root->child[i] != NULL){
+                clear(root->child[i]);
+            }
+        }
+        delete root;
     }
 };
 
