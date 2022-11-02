@@ -1,6 +1,6 @@
 class TrieNode{
 public:
-    TrieNode* child[26];
+    TrieNode * child[26];
     bool is_word;
     
     TrieNode(){
@@ -14,11 +14,7 @@ class WordDictionary {
 public:
     TrieNode* root;
     WordDictionary() {
-        root = new TrieNode;
-    }
-    
-    ~WordDictionary(){
-        clear(root);
+        root = new TrieNode();
     }
     
     void addWord(string word) {
@@ -38,7 +34,7 @@ public:
     
 private:
     bool search(string &key,int pos,TrieNode* root){
-        if(pos == key.length())
+        if(pos==key.length())
             return root->is_word;
         
         if(key[pos] != '.'){
@@ -46,21 +42,12 @@ private:
             return root ? search(key,pos+1,root) : false;
         }
         
-        for(int i=0;i<26.;i++){
+        for(int i=0;i<26;i++){
             if(root->child[i] && search(key,pos+1,root->child[i]))
                 return true;
         }
         
         return false;
-    }
-    
-    void clear(TrieNode *root){
-        for(int i = 0; i < 26; i++){
-            if(root->child[i] != NULL){
-                clear(root->child[i]);
-            }
-        }
-        delete root;
     }
 };
 
