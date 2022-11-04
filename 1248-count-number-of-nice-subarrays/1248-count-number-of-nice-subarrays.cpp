@@ -24,9 +24,9 @@ public:
 //         return total;
         
         int n = nums.size();
-        int j =0, total =0, count =0;
+        int i=0,j =0, total =0, count =0;
         int odd=0;
-        for(int i=0;i<n;i++){
+        while(i<n){
             if(nums[i]&1){
                 odd++;
                 if(odd>=k){
@@ -38,6 +38,7 @@ public:
             }
             else if(odd>=k)
                 total += count;
+            i++;
         }
         
         return total;
