@@ -14,7 +14,7 @@ public:
                         ans++;
                         i++;
                     }
-                    i++;
+                    i++; // on the left of window , we dont stay at that last odd but move a step right from there as we already calculated our count till that odd we encountered
                     total += ans;
                 }
             }
@@ -23,25 +23,5 @@ public:
             j++;
         }
         return total;
-        
-//         int n = nums.size();
-//         int i=0,j =0, total =0, count =0;
-//         int odd=0;
-//         while(i<n){
-//             if(nums[i]&1){
-//                 odd++;
-//                 if(odd>=k){
-//                     count=1;
-//                     while(!(nums[j++]&1))
-//                         count++;
-//                     total += count;
-//                 }
-//             }
-//             else if(odd>=k)
-//                 total += count;
-//             i++;
-//         }
-        
-//         return total;
     }
 };
